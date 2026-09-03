@@ -70,7 +70,7 @@ def test_simulated_labeling_is_enforced() -> None:
 def test_business_rule_schema_and_references_are_valid() -> None:
     rules = load_yaml(KNOWLEDGE / "business_rules.yaml")
     simulation = rules["simulation_business"]
-    assert simulation["currency"] == "CNY_EQUIVALENT"
+    assert simulation["currency"] == "BRL"
     assert simulation["auto_refund_limit"] > 0
     assert simulation["refund_frequency_window_days"] > 0
     assert simulation["max_auto_refunds_in_window"] > 0

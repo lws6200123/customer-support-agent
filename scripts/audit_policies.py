@@ -205,6 +205,40 @@ def audit_policy_repository(root: Path = PROJECT_ROOT) -> dict[str, Any]:
             errors.append(f"business_rules.yaml: simulation_business.{field} must be positive")
     if not isinstance(simulation.get("currency"), str) or not simulation.get("currency"):
         errors.append("business_rules.yaml: simulation_business.currency is required")
+    currency_semantics = rules.get("currency_semantics", {})
+    if simulation.get("currency") != "BRL":
+        errors.append("business_rules.yaml: Olist transaction and DemoShop threshold currency must be BRL")
+    if currency_semantics.get("conversion_applied") is not False:
+        errors.append("business_rules.yaml: currency semantics must state that no conversion was applied")
+    expected_amount_fields = {
+        "order_items.price", "order_items.freight_value", "payments.payment_value", "refunds.amount"
+    }
+    if set(currency_semantics.get("transaction_amount_fields", [])) != expected_amount_fields:
+        errors.append("business_rules.yaml: currency semantics must cover every transaction amount field")
+    if currency_semantics.get("threshold_currency_ref") != "simulation_business.currency":
+        errors.append("business_rules.yaml: refund threshold must reference the canonical transaction currency")
+
+    frequency = rules.get("refund_frequency_semantics", {})
+    expected_frequency = {
+        "count_field": "prior_approved_refunds_in_window",
+        "customer_scope_field": "customer_id",
+        "counted_statuses": ["approved"],
+        "current_request_included": False,
+        "window_anchor": "simulation_now",
+        "window_start_inclusive": True,
+        "window_end_exclusive": True,
+        "window_days_ref": "simulation_business.refund_frequency_window_days",
+        "automatic_candidate_operator": "strictly_less_than",
+        "maximum_ref": "simulation_business.max_auto_refunds_in_window",
+    }
+    for field, expected in expected_frequency.items():
+        if frequency.get(field) != expected:
+            errors.append(f"business_rules.yaml: ambiguous refund-frequency semantic {field}")
+    for reference in (frequency.get("window_days_ref"), frequency.get("maximum_ref")):
+        try:
+            resolve_reference(rules, reference)
+        except (KeyError, AttributeError, TypeError):
+            errors.append(f"business_rules.yaml: unresolved refund-frequency reference {reference}")
     decisions = rules.get("decisions", [])
     if set(decisions) != EXPECTED_DECISIONS or len(decisions) != len(set(decisions)):
         errors.append("business_rules.yaml: decision enum must contain each canonical decision once")

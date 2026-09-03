@@ -334,7 +334,14 @@ def _build_profiles(customer_ids: list[str], config: DemoBuildConfig) -> pd.Data
 
 def _build_tickets(orders: pd.DataFrame, config: DemoBuildConfig) -> pd.DataFrame:
     candidates = orders.sort_values("order_id").head(24)
-    categories = ("delivery", "refund", "product", "payment", "account")
+    categories = (
+        "DELIVERY",
+        "RETURN_REFUND",
+        "PRODUCT_AFTER_SALES",
+        "OTHER",
+        "ACCOUNT",
+        "INVOICE",
+    )
     records: list[dict[str, Any]] = []
     for position, row in enumerate(candidates.itertuples(index=False), start=1):
         created_at = pd.Timestamp(config.simulation_now) - pd.Timedelta(days=(position % 12) + 1)
@@ -345,9 +352,13 @@ def _build_tickets(orders: pd.DataFrame, config: DemoBuildConfig) -> pd.DataFram
                 "order_id": row.order_id,
                 "category": categories[(position - 1) % len(categories)],
                 "status": "closed" if position <= 18 else "open",
+                "decision": "AUTO_RESOLVE" if position <= 18 else None,
                 "priority": "high" if position % 7 == 0 else "normal",
                 "subject": f"Synthetic historical support example {position:02d}",
+                "resolution": "Synthetic historical resolution" if position <= 18 else None,
+                "notes": "Synthetic Stage 2 operational example",
                 "created_at": _timestamp_text(created_at),
+                "updated_at": _timestamp_text(created_at + pd.Timedelta(hours=position % 36 + 1)) if position <= 18 else _timestamp_text(created_at),
                 "closed_at": _timestamp_text(created_at + pd.Timedelta(hours=position % 36 + 1)) if position <= 18 else None,
                 "data_origin": "synthetic_operational_data",
             }

@@ -23,7 +23,7 @@ A refund request is an `AUTO_RESOLVE` candidate only when every condition in `bu
 - no customer risk flag is present;
 - the account is active;
 - required identity verification is satisfied;
-- refund frequency is below the canonical threshold within its configured window;
+- the count of prior approved refunds is strictly below the canonical threshold within its configured window; the current request is excluded;
 - source data relevant to the decision has no quality anomaly;
 - no suspected fraud or policy ambiguity is present.
 
@@ -37,4 +37,4 @@ Any failed eligibility/control condition follows the canonical `otherwise_decisi
 
 The future rule engine should record evaluated fields, rule references, decision, and timestamp without storing payment credentials. It must use current structured values and must not infer risk, identity, or policy eligibility from conversational tone.
 
-All limits and frequency values live only in `business_rules.yaml.simulation_business`; this document must not become a second source of numeric truth.
+All limits and frequency values live only in `business_rules.yaml.simulation_business`. Currency and prior-refund counting semantics live in the adjacent canonical semantic blocks; this document must not become a second source of truth.

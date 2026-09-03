@@ -3,10 +3,53 @@ business_name: DemoShop
 policy_boundary: simulated_portfolio_business
 
 simulation_business:
-  currency: CNY_EQUIVALENT
+  currency: BRL
   auto_refund_limit: 500.0
   refund_frequency_window_days: 30
   max_auto_refunds_in_window: 2
+
+currency_semantics:
+  source: Olist Brazilian ecommerce transaction lineage
+  conversion_applied: false
+  transaction_amount_fields:
+    - order_items.price
+    - order_items.freight_value
+    - payments.payment_value
+    - refunds.amount
+  threshold_currency_ref: simulation_business.currency
+
+refund_frequency_semantics:
+  count_field: prior_approved_refunds_in_window
+  customer_scope_field: customer_id
+  counted_statuses: [approved]
+  current_request_included: false
+  window_anchor: simulation_now
+  window_start_inclusive: true
+  window_end_exclusive: true
+  window_days_ref: simulation_business.refund_frequency_window_days
+  automatic_candidate_operator: strictly_less_than
+  maximum_ref: simulation_business.max_auto_refunds_in_window
+
+refund_eligibility:
+  eligible_order_statuses: [delivered]
+  issue_description_required: true
+  requested_amount_must_not_exceed_payment_total: true
+  reason_requirements:
+    NO_REASON:
+      required_true_field: product_condition_ok
+      window_days_ref: public_reference_parameters.no_reason_return_window_days
+    PRODUCT_DEFECT:
+      required_true_field: defect_confirmed
+      window_days_ref: public_reference_parameters.quality_return_window_days
+    DAMAGED_DELIVERY:
+      required_true_field: evidence_confirmed
+      window_hours_ref: public_reference_parameters.damaged_or_missing_report_hours
+    MISSING_ITEM:
+      required_true_field: evidence_confirmed
+      window_hours_ref: public_reference_parameters.damaged_or_missing_report_hours
+    WRONG_PRODUCT:
+      required_true_field: evidence_confirmed
+      window_days_ref: public_reference_parameters.quality_return_window_days
 
 public_reference_parameters:
   no_reason_return_window_days: 7
@@ -43,7 +86,7 @@ refund_rules:
     - risk_flag
     - account_status
     - identity_verified
-    - refunds_in_window
+    - prior_approved_refunds_in_window
     - source_data_quality_flag
   auto_approval_candidate_conditions:
     - field: policy_eligible
@@ -61,7 +104,7 @@ refund_rules:
     - field: identity_verified
       operator: equals
       value: true
-    - field: refunds_in_window
+    - field: prior_approved_refunds_in_window
       operator: less_than
       value_ref: simulation_business.max_auto_refunds_in_window
     - field: source_data_quality_flag
@@ -99,7 +142,7 @@ escalation_rules:
     operator: equals
     value: true
   - rule_id: ESC-REFUND-FREQUENCY
-    field: refunds_in_window
+    field: prior_approved_refunds_in_window
     operator: greater_than_or_equal
     value_ref: simulation_business.max_auto_refunds_in_window
   - rule_id: ESC-POLICY-AMBIGUITY
@@ -134,3 +177,13 @@ account_rules:
     identity_verified: true
   abnormal_or_locked_account_decision: ESCALATE_TO_HUMAN
   missing_verification_information_decision: NEED_MORE_INFO
+
+ticket_operations:
+  statuses: [open, awaiting_customer, under_review, resolved, closed]
+  initial_status: open
+  allowed_transitions:
+    open: [awaiting_customer, under_review, resolved, closed]
+    awaiting_customer: [open, under_review, resolved, closed]
+    under_review: [awaiting_customer, resolved, closed]
+    resolved: [open, closed]
+    closed: [open]

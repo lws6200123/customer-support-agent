@@ -1,10 +1,13 @@
-"""Deterministic project paths and Stage 2 demo configuration."""
+"""Project paths, deterministic clocks, and environment-backed app settings."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
+
+from pydantic import Field, SecretStr
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
@@ -46,3 +49,34 @@ class DemoBuildConfig:
     target_order_count: int = DEMO_ORDER_COUNT
     simulation_now: datetime = SIMULATION_NOW
     scenario_quotas: tuple[tuple[str, int | None], ...] = SCENARIO_QUOTAS
+
+
+class AppSettings(BaseSettings):
+    """Runtime configuration; secrets remain wrapped and are never logged."""
+
+    model_config = SettingsConfigDict(
+        env_file=PROJECT_ROOT / ".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+        case_sensitive=False,
+    )
+
+    app_env: str = "development"
+    database_path: Path = DEMO_DATABASE_PATH
+    simulation_now: datetime = SIMULATION_NOW
+    ragflow_base_url: str = ""
+    ragflow_api_key: SecretStr = SecretStr("")
+    ragflow_dataset_id: str = ""
+    ragflow_rerank_id: str | None = None
+    ragflow_top_n: int = Field(default=5, ge=1, le=100)
+    ragflow_similarity_threshold: float = Field(default=0.2, ge=0.0, le=1.0)
+    ragflow_vector_similarity_weight: float = Field(default=0.7, ge=0.0, le=1.0)
+    ragflow_timeout_seconds: float = Field(default=10.0, gt=0.0, le=120.0)
+
+    @property
+    def ragflow_configured(self) -> bool:
+        return bool(
+            self.ragflow_base_url.strip()
+            and self.ragflow_api_key.get_secret_value().strip()
+            and self.ragflow_dataset_id.strip()
+        )

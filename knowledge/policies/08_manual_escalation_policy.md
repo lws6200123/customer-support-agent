@@ -29,7 +29,7 @@ Use `ESCALATE_TO_HUMAN` when any canonical escalation rule in `business_rules.ya
 - inconsistent tool/data results;
 - a relevant source-data-quality anomaly.
 
-The refund limit is a DemoShop simulation threshold—not a JD.com, Olist, legal, or industry standard. Its value exists only in `business_rules.yaml`.
+The refund limit is denominated in the same BRL semantic as the unconverted Olist transaction amounts. It is a DemoShop simulation threshold—not a JD.com, Olist, legal, or industry standard. Its value exists only in `business_rules.yaml`.
 
 ## Escalation record
 

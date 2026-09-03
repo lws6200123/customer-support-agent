@@ -160,9 +160,13 @@ class Ticket(Base):
     order_id: Mapped[str] = mapped_column(ForeignKey("orders.order_id"), nullable=False, index=True)
     category: Mapped[str] = mapped_column(String(32), nullable=False)
     status: Mapped[str] = mapped_column(String(24), nullable=False, index=True)
+    decision: Mapped[str | None] = mapped_column(String(32), index=True)
     priority: Mapped[str] = mapped_column(String(24), nullable=False)
     subject: Mapped[str] = mapped_column(String(255), nullable=False)
+    resolution: Mapped[str | None] = mapped_column(Text)
+    notes: Mapped[str | None] = mapped_column(Text)
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     closed_at: Mapped[datetime | None] = mapped_column(DateTime)
     data_origin: Mapped[str] = mapped_column(String(64), nullable=False)
 

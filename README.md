@@ -2,15 +2,29 @@
 
 ## Project Overview
 
-Customer Support Ticket Agent is a planned intelligent customer-support ticket processing system based on LangGraph. Stage 3 adds a governed DemoShop customer-service knowledge base to the reproducible operational Demo database created in Stage 2.
+Customer Support Ticket Agent is a staged portfolio project for a future LangGraph-based customer-support ticket system. Stage 4 provides deterministic business services, structured Agent-ready tools, and retrieval-only access to the governed DemoShop policy corpus. It does not yet implement an Agent or autonomous ticket handling.
 
 **DemoShop is a portfolio simulation.** Transactional records and policy reference materials come from different public sources and are not claimed to belong to the same real company. Olist supplies anonymized real transaction data; JD.com Help Center pages are paraphrased public-policy references; DemoShop workflow controls are simulated internal policies.
 
-## Planned Architecture
+## Current and Planned Architecture
 
-The Python application will use a `src` layout. Planned package boundaries separate agent orchestration, tools, services, persistence, API delivery, and shared core configuration. Data, knowledge, scripts, tests, frontend assets, and container-related files have dedicated top-level directories.
+The Python application uses a `src` layout. Package boundaries separate future Agent orchestration, thin tools, business services, persistence, future API delivery, and shared configuration/contracts.
 
-The LangGraph agent, retrieval workflows, FastAPI business endpoints, and frontend remain future-stage work. Stage 2 implements only the data build, SQLite schema/loader, and read-only query validation needed by later stages.
+```text
+SQLite
+  ↓
+Business Services
+  ↓
+LangChain Structured Tools
+
+Knowledge Markdown
+  ↓
+RAGFlow Retrieval API
+  ↓
+KnowledgeTool
+```
+
+The current tools retrieve customer/order context, list customer orders, evaluate refund candidates, manage synthetic tickets, and retrieve policy evidence. The LangGraph workflow, LLM calls, FastAPI business endpoints, and frontend remain future-stage work.
 
 ## Data Strategy
 
@@ -24,6 +38,8 @@ The LangGraph agent, retrieval workflows, FastAPI business endpoints, and fronte
 - Membership, risk, account status, identity verification, language, tickets, and refunds are synthetic operational data—not Olist facts.
 - Public-policy-derived documents are paraphrased/adapted references and do not represent a real JD.com or Olist internal customer-service system.
 - Simulated internal workflow thresholds have one machine-readable source of truth: `knowledge/business_rules.yaml`.
+- Olist monetary values and the simulated automatic-refund threshold share the canonical `BRL` semantic; no currency conversion is applied.
+- Refund frequency means prior `approved` refunds for the same customer in `[simulation_now - 30 days, simulation_now)`; the current request is excluded and a count of 2 or more requires escalation.
 
 ## Planned Tech Stack
 
@@ -38,9 +54,17 @@ The LangGraph agent, retrieval workflows, FastAPI business endpoints, and fronte
 
 ## Development Status
 
-**Stage 3 — Customer-service business rules and knowledge base completed.**
+**Stage 4 — Business Tools and Knowledge Retrieval completed.**
 
-The knowledge base contains six public-policy-derived customer-service documents and four clearly labeled simulated internal operational policies. Its official-source registry, canonical business rules, six-intent taxonomy, decision examples, and deterministic conflict audit provide stable inputs for later retrieval and rule-engine work. The Stage 2 data pipeline and database remain reproducible and unchanged in scope.
+Implemented capabilities are intentionally below the Agent layer:
+
+- typed `CustomerService`, `OrderService`, `TicketService`, and `RefundDecisionService`;
+- a deterministic refund engine that separates policy eligibility from operational decision;
+- six LangChain structured tools with one JSON-safe success/error envelope;
+- RAGFlow v0.27.1 retrieval-only integration with local policy metadata normalization;
+- real retrieval and disposable-database tool smoke suites.
+
+`AUTO_RESOLVE` denotes a rule-qualified candidate only; no refund is executed. Knowledge retrieval returns evidence chunks and does not generate an answer.
 
 Rebuild and verify Stage 2 from the project root:
 
@@ -49,7 +73,11 @@ env -u PYTHONPATH .venv/bin/python scripts/build_demo_dataset.py
 env -u PYTHONPATH .venv/bin/python scripts/init_db.py
 env -u PYTHONPATH .venv/bin/python scripts/run_smoke_queries.py
 env -u PYTHONPATH .venv/bin/python scripts/audit_policies.py
+env -u PYTHONPATH .venv/bin/python scripts/run_stage4_knowledge_smoke.py
+env -u PYTHONPATH .venv/bin/python scripts/run_stage4_tool_smoke.py
 env -u PYTHONPATH .venv/bin/python -m pytest -q
 ```
 
-No RAGFlow upload, embedding, retrieval, agent behavior, LangGraph orchestration, business API, frontend, LLM call, MCP integration, or final evaluation benchmark is implemented yet.
+The Stage 4 retrieval scripts require a locally configured `.env` and an available, already-populated RAGFlow dataset. No API key is stored in the repository or printed in reports.
+
+No Agent behavior, LangGraph orchestration, LLM call, business API, frontend, MCP integration, or final evaluation benchmark is implemented yet.

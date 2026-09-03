@@ -1,0 +1,63 @@
+smoke_suite_version: 1.0.0
+purpose: Stage 4 retrieval integration smoke; not a final evaluation benchmark
+cases:
+  - case_id: KS-01
+    query: What facts and product condition are required for a no-reason return?
+    expected_document_id: POL-RETURN-001
+    expected_topic: return eligibility
+  - case_id: KS-02
+    query: What evidence should support a functional product defect after delivery?
+    expected_document_id: POL-AFTERSALES-002
+    expected_topic: product defect
+  - case_id: KS-03
+    query: How should visible delivery damage be documented and handled?
+    expected_document_id: POL-AFTERSALES-002
+    expected_topic: damaged delivery
+  - case_id: KS-04
+    query: How should estimated delivery and actual delivery timestamps be interpreted?
+    expected_document_id: POL-SHIPPING-003
+    expected_topic: shipping and delivery
+  - case_id: KS-05
+    query: Does an approved refund return through the original payment path?
+    expected_document_id: POL-REFUND-004
+    expected_topic: refund processing
+  - case_id: KS-06
+    query: What information is needed to request or modify an invoice?
+    expected_document_id: POL-INVOICE-005
+    expected_topic: invoice
+  - case_id: KS-07
+    query: What should support do when an account is locked or at risk?
+    expected_document_id: POL-ACCOUNT-006
+    expected_topic: account security
+  - case_id: KS-08
+    query: What is the simulated initial response target for an urgent ticket?
+    expected_document_id: POL-SLA-007
+    expected_topic: service SLA
+  - case_id: KS-09
+    query: When must a refund request be escalated for manual review?
+    expected_document_id: POL-ESCALATION-008
+    expected_topic: manual escalation
+  - case_id: KS-10
+    query: How does the prior approved refund frequency control affect automatic handling?
+    expected_document_id: POL-RISK-009
+    expected_topic: refund risk control
+  - case_id: KS-11
+    query: What ticket lifecycle states and decision states are supported?
+    expected_document_id: POL-OPS-010
+    expected_topic: support operations
+  - case_id: KS-12
+    query: What must be checked before exchanging a product?
+    expected_document_id: POL-RETURN-001
+    expected_topic: exchange eligibility
+  - case_id: KS-13
+    query: What evidence is needed when an item is missing from a delivered order?
+    expected_document_id: POL-AFTERSALES-002
+    expected_topic: missing item
+  - case_id: KS-14
+    query: Why can bank or payment-provider processing delay receipt of a refund?
+    expected_document_id: POL-REFUND-004
+    expected_topic: refund processing delay
+  - case_id: KS-15
+    query: What should happen when policy evidence is ambiguous or tools disagree?
+    expected_document_id: POL-ESCALATION-008
+    expected_topic: ambiguity escalation
