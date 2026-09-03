@@ -1,0 +1,84 @@
+registry_version: 1.0.0
+reviewed_date: 2026-09-03
+sources:
+  - source_id: JD_AFTERSALES_GENERAL
+    organization: JD.com Help Center
+    title: 京东自营商品售后政策服务总则
+    url: https://help.jd.com/user/issue/327-988.html
+    source_type: official_public_help_center
+    retrieved_or_reviewed_date: 2026-09-03
+    access_status: accessible
+    used_by_documents: [POL-RETURN-001, POL-AFTERSALES-002]
+    notes: Reviewed as a public reference for eligibility, condition, exclusions, evidence, and after-sales pathways; paraphrased rather than copied.
+  - source_id: JD_NO_REASON_RETURN
+    organization: JD.com Help Center
+    title: 7天无理由退货规则说明（自营）
+    url: https://help.jd.com/user/issue/327-3886.html
+    source_type: official_public_help_center
+    retrieved_or_reviewed_date: 2026-09-03
+    access_status: accessible
+    used_by_documents: [POL-RETURN-001]
+    notes: Reviewed for product-condition requirements, product-page applicability, and return-shipping qualifications.
+  - source_id: JD_MOBILE_DIGITAL_AFTERSALES
+    organization: JD.com Help Center
+    title: 手机、数码类商品售后服务细则（自营）
+    url: https://help.jd.com/user/issue/325-915.html
+    source_type: official_public_help_center
+    retrieved_or_reviewed_date: 2026-09-03
+    access_status: accessible
+    used_by_documents: [POL-AFTERSALES-002]
+    notes: Reviewed for category-specific exceptions, inspection evidence, activation/data cautions, and repair pathways.
+  - source_id: JD_DELIVERY_TIMELINESS
+    organization: JD.com Help Center
+    title: 送达时效服务说明
+    url: https://help.jd.com/user/issue/312-4515.html
+    source_type: official_public_help_center
+    retrieved_or_reviewed_date: 2026-09-03
+    access_status: accessible
+    used_by_documents: [POL-SHIPPING-003]
+    notes: Reviewed for estimated-versus-actual delivery language and exceptional delivery circumstances.
+  - source_id: JD_REFUND_EXPLANATION
+    organization: JD.com Help Center
+    title: 退款说明
+    url: https://help.jd.com/o/help/question-100.html
+    source_type: official_public_help_center
+    retrieved_or_reviewed_date: 2026-09-03
+    access_status: accessible
+    used_by_documents: [POL-REFUND-004]
+    notes: Reviewed for original-payment routing and the distinction between platform and external payment-provider processing times.
+  - source_id: JD_INVOICE_POLICY
+    organization: JD.com Help Center
+    title: 发票制度说明
+    url: https://help.jd.com/user/issue/502-974.html
+    source_type: official_public_help_center
+    retrieved_or_reviewed_date: 2026-09-03
+    access_status: accessible
+    used_by_documents: [POL-INVOICE-005]
+    notes: Reviewed for electronic invoices, title/content requirements, order completion, and cases needing seller or customer-service handling.
+  - source_id: JD_INVOICE_MODIFICATION
+    organization: JD.com Help Center
+    title: 发票如何修改？
+    url: https://help.jd.com/user/issue/502-660.html
+    source_type: official_public_help_center
+    retrieved_or_reviewed_date: 2026-09-03
+    access_status: accessible
+    used_by_documents: [POL-INVOICE-005]
+    notes: Reviewed for modification paths before and after completion and exceptions requiring customer service.
+  - source_id: JD_ACCOUNT_RISK
+    organization: JD.com Help Center
+    title: 提示我的账号账户异常、有风险怎么办？
+    url: https://help.jd.com/user/issue/164-316.html
+    source_type: official_public_help_center
+    retrieved_or_reviewed_date: 2026-09-03
+    access_status: accessible
+    used_by_documents: [POL-ACCOUNT-006]
+    notes: Reviewed for password reset and account-security guidance.
+  - source_id: JD_ACCOUNT_LOCK
+    organization: JD.com Help Center
+    title: 账户如何锁定/解锁？
+    url: https://help.jd.com/user/issue/164-3980.html
+    source_type: official_public_help_center
+    retrieved_or_reviewed_date: 2026-09-03
+    access_status: accessible
+    used_by_documents: [POL-ACCOUNT-006]
+    notes: Reviewed for lock/unlock effects, identity verification, and password-reset guidance.

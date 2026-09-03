@@ -1,0 +1,26 @@
+taxonomy_version: 1.0.0
+top_level_intents:
+  RETURN_REFUND:
+    - request_refund
+    - refund_status
+    - return_product
+    - exchange_product
+  DELIVERY:
+    - track_delivery
+    - delayed_delivery
+    - damaged_delivery
+    - missing_item
+  PRODUCT_AFTER_SALES:
+    - product_defect
+    - warranty_question
+    - repair_request
+  ACCOUNT:
+    - account_risk
+    - account_locked
+    - password_issue
+  INVOICE:
+    - request_invoice
+    - modify_invoice
+    - invoice_issue
+  OTHER:
+    - general_question

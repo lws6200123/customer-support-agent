@@ -1,0 +1,136 @@
+specification_version: 1.0.0
+business_name: DemoShop
+policy_boundary: simulated_portfolio_business
+
+simulation_business:
+  currency: CNY_EQUIVALENT
+  auto_refund_limit: 500.0
+  refund_frequency_window_days: 30
+  max_auto_refunds_in_window: 2
+
+public_reference_parameters:
+  no_reason_return_window_days: 7
+  quality_return_window_days: 7
+  quality_exchange_window_days: 15
+  damaged_or_missing_report_hours: 24
+
+sla:
+  low:
+    response_minutes: 1440
+  normal:
+    response_minutes: 480
+  high:
+    response_minutes: 120
+  urgent:
+    response_minutes: 30
+
+decisions:
+  - AUTO_RESOLVE
+  - NEED_MORE_INFO
+  - ESCALATE_TO_HUMAN
+
+decision_precedence:
+  - ESCALATE_TO_HUMAN
+  - NEED_MORE_INFO
+  - AUTO_RESOLVE
+
+refund_rules:
+  action_type: refund_request
+  required_information:
+    - order_id
+    - policy_eligible
+    - amount
+    - risk_flag
+    - account_status
+    - identity_verified
+    - refunds_in_window
+    - source_data_quality_flag
+  auto_approval_candidate_conditions:
+    - field: policy_eligible
+      operator: equals
+      value: true
+    - field: amount
+      operator: less_than_or_equal
+      value_ref: simulation_business.auto_refund_limit
+    - field: risk_flag
+      operator: equals
+      value: false
+    - field: account_status
+      operator: equals
+      value: active
+    - field: identity_verified
+      operator: equals
+      value: true
+    - field: refunds_in_window
+      operator: less_than
+      value_ref: simulation_business.max_auto_refunds_in_window
+    - field: source_data_quality_flag
+      operator: equals
+      value: none
+    - field: suspected_fraud
+      operator: equals
+      value: false
+    - field: policy_ambiguous
+      operator: equals
+      value: false
+  eligible_decision: AUTO_RESOLVE
+  otherwise_decision: ESCALATE_TO_HUMAN
+  note: AUTO_RESOLVE marks an automation candidate; this specification does not execute a refund.
+
+escalation_rules:
+  - rule_id: ESC-REFUND-LIMIT
+    field: amount
+    operator: greater_than
+    value_ref: simulation_business.auto_refund_limit
+  - rule_id: ESC-RISK-FLAG
+    field: risk_flag
+    operator: equals
+    value: true
+  - rule_id: ESC-ACCOUNT-STATUS
+    field: account_status
+    operator: not_equals
+    value: active
+  - rule_id: ESC-IDENTITY
+    all:
+      - {field: sensitive_action, operator: equals, value: true}
+      - {field: identity_verified, operator: equals, value: false}
+  - rule_id: ESC-FRAUD
+    field: suspected_fraud
+    operator: equals
+    value: true
+  - rule_id: ESC-REFUND-FREQUENCY
+    field: refunds_in_window
+    operator: greater_than_or_equal
+    value_ref: simulation_business.max_auto_refunds_in_window
+  - rule_id: ESC-POLICY-AMBIGUITY
+    field: policy_ambiguous
+    operator: equals
+    value: true
+  - rule_id: ESC-LEGAL
+    field: legal_or_regulatory_complaint
+    operator: equals
+    value: true
+  - rule_id: ESC-SAFETY
+    field: threatening_or_safety_sensitive
+    operator: equals
+    value: true
+  - rule_id: ESC-TOOL-DATA
+    field: tool_or_data_inconsistency
+    operator: equals
+    value: true
+  - rule_id: ESC-SOURCE-QUALITY
+    field: source_data_quality_flag
+    operator: not_equals
+    value: none
+
+account_rules:
+  sensitive_actions:
+    - unlock_account
+    - change_security_credentials
+    - approve_refund
+    - modify_payout_destination
+  sensitive_action_requirements:
+    account_status: active
+    identity_verified: true
+  abnormal_or_locked_account_decision: ESCALATE_TO_HUMAN
+  missing_verification_information_decision: NEED_MORE_INFO

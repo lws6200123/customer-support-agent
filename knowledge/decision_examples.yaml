@@ -1,0 +1,163 @@
+examples_version: 1.0.0
+purpose: Rule-consistency examples for tests; not an evaluation benchmark.
+examples:
+  - example_id: DEC-001
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    action_type: refund_request
+    facts: {order_id: ORD-DEMO-001, policy_eligible: true, amount: 299.0, risk_flag: false, account_status: active, identity_verified: true, refunds_in_window: 0, source_data_quality_flag: none, suspected_fraud: false, policy_ambiguous: false, sensitive_action: true}
+    missing_fields: []
+    expected_decision: AUTO_RESOLVE
+    rationale: Complete low-risk request within the canonical auto-refund limit.
+  - example_id: DEC-002
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    action_type: refund_request
+    facts: {order_id: ORD-DEMO-002, policy_eligible: true, amount: 899.0, risk_flag: false, account_status: active, identity_verified: true, refunds_in_window: 0, source_data_quality_flag: none, suspected_fraud: false, policy_ambiguous: false, sensitive_action: true}
+    missing_fields: []
+    expected_decision: ESCALATE_TO_HUMAN
+    rationale: Amount exceeds the canonical auto-refund limit.
+  - example_id: DEC-003
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    action_type: refund_request
+    facts: {order_id: ORD-DEMO-003, policy_eligible: true, amount: 120.0, risk_flag: true, account_status: active, identity_verified: true, refunds_in_window: 0, source_data_quality_flag: none, suspected_fraud: false, policy_ambiguous: false, sensitive_action: true}
+    missing_fields: []
+    expected_decision: ESCALATE_TO_HUMAN
+    rationale: A risk flag always requires human review.
+  - example_id: DEC-004
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    action_type: refund_request
+    facts: {policy_eligible: true, amount: 90.0, risk_flag: false, account_status: active, identity_verified: true, refunds_in_window: 0, source_data_quality_flag: none, suspected_fraud: false, policy_ambiguous: false, sensitive_action: true}
+    missing_fields: [order_id]
+    expected_decision: NEED_MORE_INFO
+    rationale: The order cannot be resolved without an order identifier.
+  - example_id: DEC-005
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    action_type: refund_request
+    facts: {order_id: ORD-DEMO-005, policy_eligible: true, amount: 80.0, risk_flag: false, account_status: active, identity_verified: true, refunds_in_window: 0, source_data_quality_flag: none, suspected_fraud: false, policy_ambiguous: true, sensitive_action: true}
+    missing_fields: []
+    expected_decision: ESCALATE_TO_HUMAN
+    rationale: Ambiguous policy applicability must be reviewed.
+  - example_id: DEC-006
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    action_type: refund_request
+    facts: {order_id: ORD-DEMO-006, policy_eligible: true, amount: 70.0, risk_flag: false, account_status: active, identity_verified: true, refunds_in_window: 0, source_data_quality_flag: carrier_before_approval, suspected_fraud: false, policy_ambiguous: false, sensitive_action: true}
+    missing_fields: []
+    expected_decision: ESCALATE_TO_HUMAN
+    rationale: A relevant source chronology anomaly prevents automatic action.
+  - example_id: DEC-007
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    action_type: refund_request
+    facts: {order_id: ORD-DEMO-007, policy_eligible: true, amount: 60.0, risk_flag: false, account_status: restricted, identity_verified: true, refunds_in_window: 0, source_data_quality_flag: none, suspected_fraud: false, policy_ambiguous: false, sensitive_action: true}
+    missing_fields: []
+    expected_decision: ESCALATE_TO_HUMAN
+    rationale: The account is not active.
+  - example_id: DEC-008
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    action_type: refund_request
+    facts: {order_id: ORD-DEMO-008, policy_eligible: true, amount: 50.0, risk_flag: false, account_status: active, identity_verified: false, refunds_in_window: 0, source_data_quality_flag: none, suspected_fraud: false, policy_ambiguous: false, sensitive_action: true}
+    missing_fields: []
+    expected_decision: ESCALATE_TO_HUMAN
+    rationale: Sensitive action requires verified identity.
+  - example_id: DEC-009
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    action_type: refund_request
+    facts: {order_id: ORD-DEMO-009, policy_eligible: true, amount: 40.0, risk_flag: false, account_status: active, identity_verified: true, refunds_in_window: 0, source_data_quality_flag: none, suspected_fraud: true, policy_ambiguous: false, sensitive_action: true}
+    missing_fields: []
+    expected_decision: ESCALATE_TO_HUMAN
+    rationale: Suspected fraud requires human review.
+  - example_id: DEC-010
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    action_type: refund_request
+    facts: {order_id: ORD-DEMO-010, policy_eligible: true, amount: 30.0, risk_flag: false, account_status: active, identity_verified: true, refunds_in_window: 2, source_data_quality_flag: none, suspected_fraud: false, policy_ambiguous: false, sensitive_action: true}
+    missing_fields: []
+    expected_decision: ESCALATE_TO_HUMAN
+    rationale: Refund frequency reached the canonical automatic threshold.
+  - example_id: DEC-011
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    action_type: refund_request
+    facts: {order_id: ORD-DEMO-011, policy_eligible: false, amount: 20.0, risk_flag: false, account_status: active, identity_verified: true, refunds_in_window: 0, source_data_quality_flag: none, suspected_fraud: false, policy_ambiguous: false, sensitive_action: true}
+    missing_fields: []
+    expected_decision: ESCALATE_TO_HUMAN
+    rationale: The request is not an auto-approval candidate when external policy eligibility fails.
+  - example_id: DEC-012
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    action_type: refund_request
+    facts: {order_id: ORD-DEMO-012, policy_eligible: true, risk_flag: false, account_status: active, identity_verified: true, refunds_in_window: 0, source_data_quality_flag: none, suspected_fraud: false, policy_ambiguous: false, sensitive_action: true}
+    missing_fields: [amount]
+    expected_decision: NEED_MORE_INFO
+    rationale: Refund amount is required before applying thresholds.
+  - example_id: DEC-013
+    intent: DELIVERY
+    sub_intent: track_delivery
+    action_type: informational
+    facts: {order_id: ORD-DEMO-013, information_complete: true, tool_or_data_inconsistency: false}
+    missing_fields: []
+    expected_decision: AUTO_RESOLVE
+    rationale: A complete read-only tracking request can receive a routine response.
+  - example_id: DEC-014
+    intent: ACCOUNT
+    sub_intent: account_locked
+    action_type: informational
+    facts: {information_complete: true, account_status: suspended, identity_verified: true}
+    missing_fields: []
+    expected_decision: ESCALATE_TO_HUMAN
+    rationale: A non-active account requires human security handling.
+  - example_id: DEC-015
+    intent: PRODUCT_AFTER_SALES
+    sub_intent: product_defect
+    action_type: informational
+    facts: {order_id: ORD-DEMO-015, information_complete: false, evidence_available: false}
+    missing_fields: [evidence]
+    expected_decision: NEED_MORE_INFO
+    rationale: Defect assessment needs evidence or inspection information.
+  - example_id: DEC-016
+    intent: PRODUCT_AFTER_SALES
+    sub_intent: repair_request
+    action_type: informational
+    facts: {order_id: ORD-DEMO-016, information_complete: true, evidence_available: true, policy_ambiguous: false}
+    missing_fields: []
+    expected_decision: AUTO_RESOLVE
+    rationale: Complete information supports a routine explanation of the next repair step.
+  - example_id: DEC-017
+    intent: INVOICE
+    sub_intent: request_invoice
+    action_type: informational
+    facts: {order_id: ORD-DEMO-017, information_complete: false}
+    missing_fields: [invoice_title]
+    expected_decision: NEED_MORE_INFO
+    rationale: The invoice request lacks required title information.
+  - example_id: DEC-018
+    intent: INVOICE
+    sub_intent: modify_invoice
+    action_type: informational
+    facts: {order_id: ORD-DEMO-018, information_complete: true, policy_ambiguous: false}
+    missing_fields: []
+    expected_decision: AUTO_RESOLVE
+    rationale: Complete data supports a routine modification-path explanation.
+  - example_id: DEC-019
+    intent: OTHER
+    sub_intent: general_question
+    action_type: informational
+    facts: {information_complete: true, legal_or_regulatory_complaint: true}
+    missing_fields: []
+    expected_decision: ESCALATE_TO_HUMAN
+    rationale: Legal or regulatory complaints require human review.
+  - example_id: DEC-020
+    intent: DELIVERY
+    sub_intent: track_delivery
+    action_type: informational
+    facts: {order_id: ORD-DEMO-020, information_complete: true, tool_or_data_inconsistency: true}
+    missing_fields: []
+    expected_decision: ESCALATE_TO_HUMAN
+    rationale: Conflicting tool or data results cannot be auto-resolved.

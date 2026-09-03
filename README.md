@@ -2,7 +2,9 @@
 
 ## Project Overview
 
-Customer Support Ticket Agent is a planned intelligent customer-support ticket processing system based on LangGraph. Stage 2 provides a reproducible operational Demo database built from anonymized Olist transaction data plus an explicitly synthetic customer-support overlay.
+Customer Support Ticket Agent is a planned intelligent customer-support ticket processing system based on LangGraph. Stage 3 adds a governed DemoShop customer-service knowledge base to the reproducible operational Demo database created in Stage 2.
+
+**DemoShop is a portfolio simulation.** Transactional records and policy reference materials come from different public sources and are not claimed to belong to the same real company. Olist supplies anonymized real transaction data; JD.com Help Center pages are paraphrased public-policy references; DemoShop workflow controls are simulated internal policies.
 
 ## Planned Architecture
 
@@ -20,6 +22,8 @@ The LangGraph agent, retrieval workflows, FastAPI business endpoints, and fronte
 - Scenario-aware selection retains 2,000 unique orders covering delivery, fulfillment-state, review, multi-item, and multi-payment cases.
 - One offset per order normalizes every associated timestamp while preserving original intervals, late-delivery relationships, and flagged source chronology anomalies.
 - Membership, risk, account status, identity verification, language, tickets, and refunds are synthetic operational data—not Olist facts.
+- Public-policy-derived documents are paraphrased/adapted references and do not represent a real JD.com or Olist internal customer-service system.
+- Simulated internal workflow thresholds have one machine-readable source of truth: `knowledge/business_rules.yaml`.
 
 ## Planned Tech Stack
 
@@ -34,9 +38,9 @@ The LangGraph agent, retrieval workflows, FastAPI business endpoints, and fronte
 
 ## Development Status
 
-**Stage 2 — Demo business dataset and SQLite operational database completed.**
+**Stage 3 — Customer-service business rules and knowledge base completed.**
 
-The nine official Kaggle CSV files remain immutable and ignored. The repository now contains deterministic build logic, SQLAlchemy models, atomic database initialization, business-query smoke checks, Stage 1/2 reports, and focused tests. Generated processed CSVs and the SQLite database remain outside Git.
+The knowledge base contains six public-policy-derived customer-service documents and four clearly labeled simulated internal operational policies. Its official-source registry, canonical business rules, six-intent taxonomy, decision examples, and deterministic conflict audit provide stable inputs for later retrieval and rule-engine work. The Stage 2 data pipeline and database remain reproducible and unchanged in scope.
 
 Rebuild and verify Stage 2 from the project root:
 
@@ -44,7 +48,8 @@ Rebuild and verify Stage 2 from the project root:
 env -u PYTHONPATH .venv/bin/python scripts/build_demo_dataset.py
 env -u PYTHONPATH .venv/bin/python scripts/init_db.py
 env -u PYTHONPATH .venv/bin/python scripts/run_smoke_queries.py
+env -u PYTHONPATH .venv/bin/python scripts/audit_policies.py
 env -u PYTHONPATH .venv/bin/python -m pytest -q
 ```
 
-No agent behavior, LangGraph orchestration, RAG integration, business API, frontend, LLM call, MCP integration, or evaluation-case pipeline is implemented yet.
+No RAGFlow upload, embedding, retrieval, agent behavior, LangGraph orchestration, business API, frontend, LLM call, MCP integration, or final evaluation benchmark is implemented yet.

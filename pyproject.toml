@@ -22,6 +22,9 @@ dependencies = [
 data = [
     "pandas>=2.2,<3",
 ]
+knowledge = [
+    "PyYAML>=6.0,<7",
+]
 dev = [
     "pytest>=8.0",
 ]
