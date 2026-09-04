@@ -64,6 +64,13 @@ class AppSettings(BaseSettings):
     app_env: str = "development"
     database_path: Path = DEMO_DATABASE_PATH
     simulation_now: datetime = SIMULATION_NOW
+    max_agent_steps: int = Field(default=8, ge=1, le=32)
+    deepseek_base_url: str = ""
+    deepseek_api_key: SecretStr = SecretStr("")
+    deepseek_model: str = ""
+    deepseek_timeout_seconds: float = Field(default=30.0, gt=0.0, le=300.0)
+    deepseek_max_retries: int = Field(default=2, ge=0, le=5)
+    llm_structured_output_attempts: int = Field(default=2, ge=1, le=3)
     ragflow_base_url: str = ""
     ragflow_api_key: SecretStr = SecretStr("")
     ragflow_dataset_id: str = ""
@@ -79,4 +86,12 @@ class AppSettings(BaseSettings):
             self.ragflow_base_url.strip()
             and self.ragflow_api_key.get_secret_value().strip()
             and self.ragflow_dataset_id.strip()
+        )
+
+    @property
+    def deepseek_configured(self) -> bool:
+        return bool(
+            self.deepseek_base_url.strip()
+            and self.deepseek_api_key.get_secret_value().strip()
+            and self.deepseek_model.strip()
         )

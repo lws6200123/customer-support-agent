@@ -189,11 +189,22 @@ class AgentRun(Base):
     __tablename__ = "agent_runs"
 
     agent_run_id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    customer_id: Mapped[str | None] = mapped_column(ForeignKey("customers.customer_id"), index=True)
-    order_id: Mapped[str | None] = mapped_column(ForeignKey("orders.order_id"), index=True)
+    # Trace identifiers intentionally do not enforce foreign keys so failed lookups
+    # can still be audited without creating placeholder business records.
+    ticket_id: Mapped[str | None] = mapped_column(String(24), index=True)
+    customer_id: Mapped[str | None] = mapped_column(String(20), index=True)
+    order_id: Mapped[str | None] = mapped_column(String(20), index=True)
+    user_message: Mapped[str] = mapped_column(Text, nullable=False)
+    intent: Mapped[str | None] = mapped_column(String(40), index=True)
+    decision: Mapped[str | None] = mapped_column(String(32), index=True)
     status: Mapped[str] = mapped_column(String(24), nullable=False)
     started_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
     completed_at: Mapped[datetime | None] = mapped_column(DateTime)
+    total_latency_ms: Mapped[float | None] = mapped_column(Float)
+    tool_call_count: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
+    error_summary: Mapped[str | None] = mapped_column(Text)
+    final_response: Mapped[str | None] = mapped_column(Text)
+    agent_summary: Mapped[str | None] = mapped_column(Text)
 
 
 class AgentStep(Base):
@@ -204,8 +215,14 @@ class AgentStep(Base):
         ForeignKey("agent_runs.agent_run_id", ondelete="CASCADE"), nullable=False, index=True
     )
     step_sequence: Mapped[int] = mapped_column(Integer, nullable=False)
-    step_type: Mapped[str] = mapped_column(String(40), nullable=False)
-    payload_json: Mapped[str | None] = mapped_column(Text)
+    node_name: Mapped[str] = mapped_column(String(64), nullable=False)
+    action: Mapped[str | None] = mapped_column(String(64))
+    tool_name: Mapped[str | None] = mapped_column(String(64))
+    status: Mapped[str] = mapped_column(String(24), nullable=False)
+    latency_ms: Mapped[float] = mapped_column(Float, nullable=False)
+    input_summary: Mapped[str | None] = mapped_column(Text)
+    output_summary: Mapped[str | None] = mapped_column(Text)
+    error_code: Mapped[str | None] = mapped_column(String(64), index=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
 
     __table_args__ = (UniqueConstraint("agent_run_id", "step_sequence"),)

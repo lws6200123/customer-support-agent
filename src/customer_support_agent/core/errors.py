@@ -14,6 +14,10 @@ class ErrorCode(str, Enum):
     KNOWLEDGE_SERVICE_UNAVAILABLE = "KNOWLEDGE_SERVICE_UNAVAILABLE"
     KNOWLEDGE_CONFIG_MISSING = "KNOWLEDGE_CONFIG_MISSING"
     POLICY_EVIDENCE_NOT_FOUND = "POLICY_EVIDENCE_NOT_FOUND"
+    LLM_CONFIG_MISSING = "LLM_CONFIG_MISSING"
+    LLM_UNAVAILABLE = "LLM_UNAVAILABLE"
+    LLM_STRUCTURED_OUTPUT_FAILED = "LLM_STRUCTURED_OUTPUT_FAILED"
+    AGENT_STEP_LIMIT_REACHED = "AGENT_STEP_LIMIT_REACHED"
 
 
 class DomainError(RuntimeError):
@@ -68,4 +72,22 @@ class PolicyEvidenceNotFoundError(DomainError):
         super().__init__(
             ErrorCode.POLICY_EVIDENCE_NOT_FOUND,
             "No sufficiently relevant policy evidence was found.",
+        )
+
+
+class LLMConfigMissingError(DomainError):
+    def __init__(self) -> None:
+        super().__init__(ErrorCode.LLM_CONFIG_MISSING, "Language-model configuration is incomplete.")
+
+
+class LLMStructuredOutputError(DomainError):
+    def __init__(self, message: str = "The language model did not return valid structured output.") -> None:
+        super().__init__(ErrorCode.LLM_STRUCTURED_OUTPUT_FAILED, message)
+
+
+class LLMUnavailableError(DomainError):
+    def __init__(self) -> None:
+        super().__init__(
+            ErrorCode.LLM_UNAVAILABLE,
+            "The configured language-model service is unavailable.",
         )
