@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Customer Support Ticket Agent is a staged portfolio project for a guarded LangGraph-based customer-support ticket system. Stage 6 exposes the single-Agent workflow through a typed FastAPI service, POST-based SSE streaming, human review operations, and dashboard metrics.
+Customer Support Ticket Agent is a staged portfolio project for a guarded LangGraph-based customer-support ticket system. Stage 7 adds a Vue 3 operations console on top of the Stage 6 typed FastAPI service, POST-based SSE streaming, human review operations, and dashboard metrics.
 
 **DemoShop is a portfolio simulation.** Transactional records and policy reference materials come from different public sources and are not claimed to belong to the same real company. Olist supplies anonymized real transaction data; JD.com Help Center pages are paraphrased public-policy references; DemoShop workflow controls are simulated internal policies.
 
@@ -63,7 +63,7 @@ flowchart TD
 - Pydantic
 - httpx
 - pytest
-- Vue (planned frontend)
+- Vue 3, TypeScript, Vite, Vue Router, and Ant Design Vue
 
 ## FastAPI Architecture
 
@@ -122,6 +122,30 @@ curl -N http://127.0.0.1:8000/api/v1/agent/run/stream \
 
 The review queue is derived from canonical `ESCALATE_TO_HUMAN` runs and `under_review` tickets, never from response text. Reviewer actions update only the synthetic demo lifecycle and append metadata to `human_reviews`. They do not call a payment provider or represent money as refunded. Dashboard values are queried from the current runtime SQLite database; Stage 5 smoke numbers are never hard-coded.
 
+## Frontend Operations Console
+
+The Stage 7 browser application is a desktop-focused operations console. Its pages are:
+
+- `/` — live dashboard totals, decision/status distributions, and recent Agent runs;
+- `/tickets` — paginated Ticket inbox with status, decision, and intent filters;
+- `/tickets/:ticketId` — Ticket context, latest safe Agent outcome, and sanitized trace;
+- `/human-reviews` — canonical escalation queue with controlled review actions;
+- `/demo` — real POST-SSE Agent execution with a live timeline and verified anonymous demo identifiers.
+
+Frontend code is separated into typed API modules, reusable presentation components, route-level pages, and an SSE composable. The browser calls only FastAPI; DeepSeek and RAGFlow credentials remain server-side.
+
+```text
+Vue operations console
+  ↓ HTTP JSON / POST SSE
+FastAPI
+  ↓
+LangGraph
+  ↓
+Business Tools → SQLite / RAGFlow
+```
+
+The interface deliberately labels `AUTO_RESOLVE` as a candidate rather than a completed refund. Human review is a simulated workflow and no financial action is executed.
+
 ## Development Run
 
 ```bash
@@ -131,9 +155,19 @@ env -u PYTHONPATH .venv/bin/python -m uvicorn customer_support_agent.api.main:ap
 
 In development, interactive docs are available at `/docs` and the typed specification at `/openapi.json`. CORS uses the `CORS_ALLOWED_ORIGINS` comma-separated allowlist (default `http://localhost:5173`), never `*`; credentials are disabled.
 
+Run the frontend in a second terminal:
+
+```bash
+cd frontend
+npm ci
+npm run dev
+```
+
+Then open [http://localhost:5173](http://localhost:5173). For a first-time local setup, `npm install` also works; `package-lock.json` is committed so subsequent installs should prefer `npm ci`.
+
 ## Development Status
 
-**Stage 6 — FastAPI service, SSE streaming, human review API, and dashboard contract implemented.**
+**Stage 7 — Vue 3 customer-support operations console implemented and visually accepted.**
 
 The Agent is built on these previously completed capabilities:
 
@@ -161,6 +195,15 @@ Stage 6 adds:
 - append-only human review history and runtime-derived dashboard metrics;
 - fake-model API/SSE tests plus a bounded real localhost HTTP integration smoke.
 
+Stage 7 adds:
+
+- a professional Ant Design Vue layout for Dashboard, Tickets, Human Review, and Agent Demo;
+- one typed FastAPI client with consistent envelope, request-ID, timeout, and network-error handling;
+- a POST-SSE `fetch()` / `ReadableStream` client that tolerates unknown future event types;
+- sanitized ordered Agent timelines and safe routing/outcome language;
+- focused Vitest coverage for API envelopes, page states, lists, actions, tags, traces, SSE parsing, and form validation;
+- reproducible Node dependencies through `package-lock.json` and a Vite production build.
+
 The limited Stage 5 integration smoke completed 10/10 fixed cases with the configured DeepSeek model, Stage 4 tools, and RAGFlow. This is an integration check rather than a final quality benchmark.
 
 `AUTO_RESOLVE` denotes a rule-qualified candidate only; no refund is executed. Knowledge retrieval returns evidence chunks and does not generate an answer.
@@ -181,4 +224,4 @@ env -u PYTHONPATH .venv/bin/python -m pytest -q
 
 The retrieval scripts require a locally configured `.env` and an available, already-populated RAGFlow dataset. The Stage 5 real smoke additionally requires `DEEPSEEK_API_KEY`, `DEEPSEEK_BASE_URL`, and `DEEPSEEK_MODEL`. No API key is stored in the repository, persisted to runtime traces, or printed in reports.
 
-Refunds are never executed: `AUTO_RESOLVE` remains a deterministic Demo decision candidate. Stage 6 is localhost/development software with no production authentication; the internal review endpoints are not safe for public deployment. There is no frontend, final evaluation benchmark, Docker Compose integration, multi-agent workflow, MCP integration, task queue, or WebSocket service.
+Refunds are never executed: `AUTO_RESOLVE` remains a deterministic Demo decision candidate. Stage 7 is localhost/development software with no production authentication; the internal review endpoints are not safe for public deployment. There is no final evaluation benchmark, Docker Compose integration, multi-agent workflow, MCP integration, task queue, or WebSocket service. The current frontend targets desktop use; its Stage 7 manual visual acceptance is complete.
