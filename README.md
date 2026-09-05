@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Customer Support Ticket Agent is a staged portfolio project for a guarded LangGraph-based customer-support ticket system. Stage 5 implements a single-Agent stateful workflow over the deterministic business services, structured tools, and governed DemoShop policy corpus.
+Customer Support Ticket Agent is a staged portfolio project for a guarded LangGraph-based customer-support ticket system. Stage 6 exposes the single-Agent workflow through a typed FastAPI service, POST-based SSE streaming, human review operations, and dashboard metrics.
 
 **DemoShop is a portfolio simulation.** Transactional records and policy reference materials come from different public sources and are not claimed to belong to the same real company. Olist supplies anonymized real transaction data; JD.com Help Center pages are paraphrased public-policy references; DemoShop workflow controls are simulated internal policies.
 
@@ -65,9 +65,75 @@ flowchart TD
 - pytest
 - Vue (planned frontend)
 
+## FastAPI Architecture
+
+The HTTP layer follows one direction: thin router → application service → existing workflow/services → tools and persistence. Routers contain no SQL, refund rules, or copied LangGraph decisions. `create_app()` constructs dependencies without running an Agent, rebuilding data, calling DeepSeek, or calling RAGFlow. Startup only ensures the additive `human_reviews` history table exists.
+
+Synchronous LangGraph, SQLite, LLM, and RAGFlow work runs in a bounded application thread pool. Async routes cooperatively await those futures so long work does not block the event loop. Both `/run` and `/run/stream` execute the same compiled graph; the stream adapter converts graph node updates into safe events.
+
+Every JSON response uses a stable envelope:
+
+```json
+{"ok": true, "data": {}, "request_id": "client-or-server-request-id"}
+```
+
+Errors use a non-200 HTTP status and `{ "ok": false, "error": { "code": "...", "message": "..." }, "request_id": "..." }`. Clients may supply `X-Request-ID`; every response echoes it in the header and body. Logs contain request ID, method, path, status, and latency, but not request bodies, authorization headers, secrets, or complete prompts.
+
+## API Endpoints
+
+- `GET /health` — lightweight liveness and version.
+- `GET /ready` — SQLite availability plus configuration presence; it never invokes generation or retrieval.
+- `GET /api/v1/tickets` — paginated tickets, optionally filtered by `status`, `decision`, or `intent`.
+- `POST /api/v1/tickets` — create a linked synthetic demo ticket without running the Agent.
+- `GET /api/v1/tickets/{ticket_id}` — ticket, safe customer/order summary, and latest run summary.
+- `POST /api/v1/agent/run` — synchronous-response Agent execution.
+- `POST /api/v1/agent/run/stream` — SSE Agent execution.
+- `GET /api/v1/agent-runs/{run_id}` — safe run summary.
+- `GET /api/v1/agent-runs/{run_id}/steps` — ordered sanitized timeline.
+- `GET /api/v1/human-reviews` — paginated canonical escalation queue.
+- `POST /api/v1/human-reviews/{ticket_id}` — controlled `RESOLVE`, `REQUEST_MORE_INFO`, or `KEEP_ESCALATED` review action.
+- `GET /api/v1/dashboard/summary` — live SQLite ticket/run counts, average latency, and recent runs.
+
+List endpoints default to 20 records and cap `page_size` at 100. The API input for an Agent run is `message` plus optional `customer_id`, `order_id`, and `ticket_id`. An existing `ticket_id` is processed directly. Without a ticket, valid customer and order IDs cause a linked demo ticket to be created; incomplete context remains an unlinked run with `ticket_id: null`, allowing a truthful `NEED_MORE_INFO` result. `POST /tickets` requires both valid links because the existing operational Ticket schema intentionally enforces those foreign keys.
+
+Example:
+
+```bash
+curl -sS http://127.0.0.1:8000/health -H 'X-Request-ID: local-example'
+
+curl -sS http://127.0.0.1:8000/api/v1/agent/run \
+  -H 'Content-Type: application/json' \
+  -d '{"message":"My package is late, but I cannot find the order ID."}'
+```
+
+## SSE Usage
+
+The stream sequence is `run_started`, `classification`, zero or more `tool_started` / `tool_completed` pairs, `decision`, `final_response`, and `run_completed`. Safe failures emit `error` and terminate. Each event carries JSON with a timestamp and run ID once available; full prompts, policy bodies, credentials, and raw trace payloads are excluded.
+
+Because browsers' native `EventSource` cannot POST, Stage 7 must consume this endpoint with `fetch()` and `ReadableStream`:
+
+```bash
+curl -N http://127.0.0.1:8000/api/v1/agent/run/stream \
+  -H 'Content-Type: application/json' \
+  -d '{"message":"My package is late, but I cannot find the order ID."}'
+```
+
+## Human Review and Dashboard
+
+The review queue is derived from canonical `ESCALATE_TO_HUMAN` runs and `under_review` tickets, never from response text. Reviewer actions update only the synthetic demo lifecycle and append metadata to `human_reviews`. They do not call a payment provider or represent money as refunded. Dashboard values are queried from the current runtime SQLite database; Stage 5 smoke numbers are never hard-coded.
+
+## Development Run
+
+```bash
+env -u PYTHONPATH .venv/bin/python -m uvicorn customer_support_agent.api.main:app \
+  --app-dir src --host 127.0.0.1 --port 8000
+```
+
+In development, interactive docs are available at `/docs` and the typed specification at `/openapi.json`. CORS uses the `CORS_ALLOWED_ORIGINS` comma-separated allowlist (default `http://localhost:5173`), never `*`; credentials are disabled.
+
 ## Development Status
 
-**Stage 5 — Guarded LangGraph workflow and real DeepSeek integration smoke completed.**
+**Stage 6 — FastAPI service, SSE streaming, human review API, and dashboard contract implemented.**
 
 The Agent is built on these previously completed capabilities:
 
@@ -86,6 +152,15 @@ Stage 5 adds:
 - a scripted LLM test adapter so normal tests have no API cost or network dependency;
 - a limited real DeepSeek + RAGFlow integration script that refuses to run without complete local configuration.
 
+Stage 6 adds:
+
+- typed success/error envelopes and normalized domain/validation/service failures;
+- request correlation, safe request logging, explicit CORS, liveness, and readiness;
+- paginated Ticket and review APIs plus safe Agent run/timeline queries;
+- one shared LangGraph execution path for non-streaming and SSE delivery;
+- append-only human review history and runtime-derived dashboard metrics;
+- fake-model API/SSE tests plus a bounded real localhost HTTP integration smoke.
+
 The limited Stage 5 integration smoke completed 10/10 fixed cases with the configured DeepSeek model, Stage 4 tools, and RAGFlow. This is an integration check rather than a final quality benchmark.
 
 `AUTO_RESOLVE` denotes a rule-qualified candidate only; no refund is executed. Knowledge retrieval returns evidence chunks and does not generate an answer.
@@ -100,9 +175,10 @@ env -u PYTHONPATH .venv/bin/python scripts/audit_policies.py
 env -u PYTHONPATH .venv/bin/python scripts/run_stage4_knowledge_smoke.py
 env -u PYTHONPATH .venv/bin/python scripts/run_stage4_tool_smoke.py
 env -u PYTHONPATH .venv/bin/python scripts/run_stage5_agent_smoke.py
+env -u PYTHONPATH .venv/bin/python scripts/run_stage6_api_smoke.py
 env -u PYTHONPATH .venv/bin/python -m pytest -q
 ```
 
 The retrieval scripts require a locally configured `.env` and an available, already-populated RAGFlow dataset. The Stage 5 real smoke additionally requires `DEEPSEEK_API_KEY`, `DEEPSEEK_BASE_URL`, and `DEEPSEEK_MODEL`. No API key is stored in the repository, persisted to runtime traces, or printed in reports.
 
-Refunds are never executed: `AUTO_RESOLVE` remains a deterministic Demo decision candidate. There is no production authentication, FastAPI business interface, SSE, frontend, final evaluation benchmark, multi-agent workflow, or MCP integration.
+Refunds are never executed: `AUTO_RESOLVE` remains a deterministic Demo decision candidate. Stage 6 is localhost/development software with no production authentication; the internal review endpoints are not safe for public deployment. There is no frontend, final evaluation benchmark, Docker Compose integration, multi-agent workflow, MCP integration, task queue, or WebSocket service.

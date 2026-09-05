@@ -9,6 +9,7 @@ class ErrorCode(str, Enum):
     CUSTOMER_NOT_FOUND = "CUSTOMER_NOT_FOUND"
     ORDER_NOT_FOUND = "ORDER_NOT_FOUND"
     TICKET_NOT_FOUND = "TICKET_NOT_FOUND"
+    RUN_NOT_FOUND = "RUN_NOT_FOUND"
     INVALID_INPUT = "INVALID_INPUT"
     DATABASE_ERROR = "DATABASE_ERROR"
     KNOWLEDGE_SERVICE_UNAVAILABLE = "KNOWLEDGE_SERVICE_UNAVAILABLE"
@@ -42,6 +43,11 @@ class OrderNotFoundError(DomainError):
 class TicketNotFoundError(DomainError):
     def __init__(self, ticket_id: str) -> None:
         super().__init__(ErrorCode.TICKET_NOT_FOUND, f"Ticket not found: {ticket_id}")
+
+
+class RunNotFoundError(DomainError):
+    def __init__(self, run_id: int) -> None:
+        super().__init__(ErrorCode.RUN_NOT_FOUND, f"Agent run not found: {run_id}")
 
 
 class InvalidInputError(DomainError):

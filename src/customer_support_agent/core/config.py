@@ -62,6 +62,7 @@ class AppSettings(BaseSettings):
     )
 
     app_env: str = "development"
+    cors_allowed_origins: str = "http://localhost:5173"
     database_path: Path = DEMO_DATABASE_PATH
     simulation_now: datetime = SIMULATION_NOW
     max_agent_steps: int = Field(default=8, ge=1, le=32)
@@ -95,3 +96,9 @@ class AppSettings(BaseSettings):
             and self.deepseek_api_key.get_secret_value().strip()
             and self.deepseek_model.strip()
         )
+
+    @property
+    def cors_origins(self) -> list[str]:
+        """Parse a comma-separated allowlist while explicitly rejecting wildcards."""
+        origins = [item.strip() for item in self.cors_allowed_origins.split(",") if item.strip()]
+        return [origin for origin in origins if origin != "*"]

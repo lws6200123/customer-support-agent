@@ -207,6 +207,24 @@ class AgentRun(Base):
     agent_summary: Mapped[str | None] = mapped_column(Text)
 
 
+class HumanReview(Base):
+    """Append-only reviewer action history for the demo support workflow."""
+
+    __tablename__ = "human_reviews"
+
+    human_review_id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    ticket_id: Mapped[str] = mapped_column(
+        ForeignKey("tickets.ticket_id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    agent_run_id: Mapped[int | None] = mapped_column(
+        ForeignKey("agent_runs.agent_run_id", ondelete="SET NULL"), nullable=True, index=True
+    )
+    action: Mapped[str] = mapped_column(String(32), nullable=False, index=True)
+    review_note: Mapped[str | None] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime, nullable=False)
+    data_origin: Mapped[str] = mapped_column(String(64), nullable=False)
+
+
 class AgentStep(Base):
     __tablename__ = "agent_steps"
 

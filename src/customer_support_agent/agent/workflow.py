@@ -738,14 +738,7 @@ class SupportAgentWorkflow:
         }
 
     def run(self, request: AgentRequest | dict[str, Any]) -> AgentState:
-        validated = request if isinstance(request, AgentRequest) else AgentRequest.model_validate(request)
-        initial: AgentState = {
-            "ticket_id": validated.ticket_id,
-            "user_message": validated.user_message,
-            "customer_id": validated.customer_id,
-            "order_id": validated.order_id,
-            "error_codes": [],
-        }
+        initial = self._initial_state(request)
         try:
             return self.graph.invoke(initial)
         except Exception:
@@ -764,3 +757,26 @@ class SupportAgentWorkflow:
                 "completed_at": completed_at,
                 "fatal_error": True,
             }
+
+    @staticmethod
+    def _initial_state(request: AgentRequest | dict[str, Any]) -> AgentState:
+        validated = request if isinstance(request, AgentRequest) else AgentRequest.model_validate(request)
+        initial: AgentState = {
+            "ticket_id": validated.ticket_id,
+            "user_message": validated.user_message,
+            "customer_id": validated.customer_id,
+            "order_id": validated.order_id,
+            "error_codes": [],
+        }
+        return initial
+
+    def stream_updates(
+        self, request: AgentRequest | dict[str, Any]
+    ):  # type: ignore[no-untyped-def]
+        """Yield node name and accumulated state from the same compiled graph as ``run``."""
+        accumulated = self._initial_state(request)
+        for update in self.graph.stream(accumulated, stream_mode="updates"):
+            for node_name, values in update.items():
+                if isinstance(values, dict):
+                    accumulated.update(values)
+                yield node_name, dict(accumulated)

@@ -8,7 +8,7 @@ from sqlalchemy import Engine, func, insert, select, update
 from sqlalchemy.exc import SQLAlchemyError
 
 from customer_support_agent.agent.schemas import AgentRunStatus, AgentTrace, AgentTraceStep
-from customer_support_agent.core.errors import DatabaseError, InvalidInputError
+from customer_support_agent.core.errors import DatabaseError, RunNotFoundError
 from customer_support_agent.core.security import sanitize_text
 from customer_support_agent.core.schemas import Decision
 from customer_support_agent.db.models import AgentRun, AgentStep
@@ -164,7 +164,7 @@ class AgentTraceService:
         except SQLAlchemyError as exc:
             raise DatabaseError() from exc
         if run is None:
-            raise InvalidInputError(f"Agent run not found: {run_id}")
+            raise RunNotFoundError(run_id)
         return AgentTrace(
             **dict(run),
             steps=[AgentTraceStep.model_validate(dict(row)) for row in steps],
