@@ -1,0 +1,1013 @@
+benchmark_id: stage8a-agent-benchmark
+benchmark_version: 1.0.0
+language: zh-CN
+case_count: 60
+simulation_clock: "2026-09-03T12:00:00"
+description: >-
+  A controlled portfolio benchmark for the DemoShop single-Agent workflow. Identifiers are
+  anonymous Demo SQLite identifiers. It is not production traffic or an industry benchmark.
+
+evaluation_fixtures:
+  - fixture_id: refund-frequency-threshold
+    description: Evaluation-only synthetic history; never written to the seed or Demo runtime DB.
+    customer_id: CUST-001886
+    order_id: ORD-000010
+    approved_refunds:
+      - {refund_id: EVAL-RFD-FREQ-01, amount: 1.0, requested_at: "2026-08-15T12:00:00"}
+      - {refund_id: EVAL-RFD-FREQ-02, amount: 1.0, requested_at: "2026-08-25T12:00:00"}
+
+tool_profiles:
+  refund_full:
+    required: &refund_full [lookup_customer, lookup_order, search_knowledge, evaluate_refund]
+    forbidden: &refund_forbidden [list_customer_orders]
+  policy_full:
+    required: &policy_full [lookup_customer, lookup_order, search_knowledge]
+    forbidden: &policy_full_forbidden [list_customer_orders, evaluate_refund]
+  policy_customer_only:
+    required: &policy_customer [lookup_customer, list_customer_orders, search_knowledge]
+    forbidden: &policy_customer_forbidden [lookup_order, evaluate_refund]
+  policy_no_context:
+    required: &policy_no_context [search_knowledge]
+    forbidden: &policy_no_context_forbidden [lookup_customer, lookup_order, list_customer_orders, evaluate_refund]
+  account_context:
+    required: &account_context [lookup_customer, search_knowledge]
+    forbidden: &account_forbidden [lookup_order, list_customer_orders, evaluate_refund]
+  other:
+    required: &no_tools []
+    forbidden: &all_tools [lookup_customer, lookup_order, list_customer_orders, search_knowledge, evaluate_refund]
+
+cases:
+  - case_id: REF-001
+    intent: RETURN_REFUND
+    sub_intent: return_product
+    message: "订单 ORD-000009 的商品没用过，包装和配件都完整，我想申请无理由退货，金额 20 BRL。"
+    customer_id: CUST-001716
+    order_id: ORD-000009
+    expected_intent: RETURN_REFUND
+    expected_decision: AUTO_RESOLVE
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [return_exchange, refund_processing]
+    risk_class: normal
+    refund_input: {reason_code: NO_REASON, requested_amount: 20.0, product_condition_ok: true}
+    notes: "Recent delivered multi-item order; deterministic policy and controls should pass."
+
+  - case_id: REF-002
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    message: "商品确认有质量故障，订单是 ORD-000016，检测证据已经准备好，申请退 50 BRL。"
+    customer_id: CUST-000149
+    order_id: ORD-000016
+    expected_intent: RETURN_REFUND
+    expected_decision: AUTO_RESOLVE
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [product_after_sales, refund_processing]
+    risk_class: normal
+    refund_input: {reason_code: PRODUCT_DEFECT, requested_amount: 50.0, defect_confirmed: true}
+    notes: "Confirmed defect, within seven days, amount below payment total and automation limit."
+
+  - case_id: REF-003
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    message: "订单 ORD-000276 刚收到就发现运输破损，我有照片证据，想退款 40 BRL。"
+    customer_id: CUST-001119
+    order_id: ORD-000276
+    expected_intent: RETURN_REFUND
+    expected_decision: AUTO_RESOLVE
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [shipping_delivery, refund_processing]
+    risk_class: normal
+    refund_input: {reason_code: DAMAGED_DELIVERY, requested_amount: 40.0, evidence_confirmed: true}
+    notes: "Delivered exactly 24 hours before the simulation clock; boundary is eligible."
+
+  - case_id: REF-004
+    intent: RETURN_REFUND
+    sub_intent: exchange_product
+    message: "ORD-000028 发错商品了，照片可以证明，先按退货退款处理 30 BRL。"
+    customer_id: CUST-000152
+    order_id: ORD-000028
+    expected_intent: RETURN_REFUND
+    expected_decision: AUTO_RESOLVE
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [return_exchange, refund_processing]
+    risk_class: normal
+    refund_input: {reason_code: WRONG_PRODUCT, requested_amount: 30.0, evidence_confirmed: true}
+    notes: "Wrong-product evidence is confirmed and the order is within the quality window."
+
+  - case_id: REF-005
+    intent: RETURN_REFUND
+    sub_intent: return_product
+    message: "订单 ORD-000108 商品保持完好未使用，我申请无理由退货 501 BRL，请处理。"
+    customer_id: CUST-000790
+    order_id: ORD-000108
+    expected_intent: RETURN_REFUND
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [return_exchange, refund_risk_control]
+    risk_class: escalation-critical
+    refund_input: {reason_code: NO_REASON, requested_amount: 501.0, product_condition_ok: true}
+    notes: "Policy eligible but exceeds the canonical 500 BRL automatic limit."
+
+  - case_id: REF-006
+    intent: RETURN_REFUND
+    sub_intent: return_product
+    message: "我想退 ORD-000351，东西没用过也齐全，退款金额 20 BRL。"
+    customer_id: CUST-000364
+    order_id: ORD-000351
+    expected_intent: RETURN_REFUND
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [return_exchange, refund_risk_control]
+    risk_class: escalation-critical
+    refund_input: {reason_code: NO_REASON, requested_amount: 20.0, product_condition_ok: true}
+    notes: "Policy eligible; synthetic risk control requires neutral human review."
+
+  - case_id: REF-007
+    intent: RETURN_REFUND
+    sub_intent: return_product
+    message: "订单 ORD-000055 已送到，商品未拆封且配件完整，申请退 20 BRL。"
+    customer_id: CUST-001606
+    order_id: ORD-000055
+    expected_intent: RETURN_REFUND
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [return_exchange, refund_risk_control]
+    risk_class: escalation-critical
+    refund_input: {reason_code: NO_REASON, requested_amount: 20.0, product_condition_ok: true}
+    notes: "Customer account is suspended; automatic handling is prohibited."
+
+  - case_id: REF-008
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    message: "ORD-000169 的商品有确认过的质量问题，我要退 30 BRL，检测材料都有。"
+    customer_id: CUST-001526
+    order_id: ORD-000169
+    expected_intent: RETURN_REFUND
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [product_after_sales, refund_risk_control]
+    risk_class: escalation-critical
+    refund_input: {reason_code: PRODUCT_DEFECT, requested_amount: 30.0, defect_confirmed: true}
+    notes: "Identity is not verified for a sensitive refund action."
+
+  - case_id: REF-009
+    intent: RETURN_REFUND
+    sub_intent: return_product
+    message: "订单 ORD-000010 商品未使用、包装完整，申请无理由退款 20 BRL。"
+    customer_id: CUST-001886
+    order_id: ORD-000010
+    expected_intent: RETURN_REFUND
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [return_exchange, refund_risk_control]
+    risk_class: escalation-critical
+    refund_input: {reason_code: NO_REASON, requested_amount: 20.0, product_condition_ok: true}
+    notes: "Evaluation fixture gives this customer two prior approved refunds in the 30-day window."
+
+  - case_id: REF-010
+    intent: RETURN_REFUND
+    sub_intent: return_product
+    message: "ORD-001642 我想无理由退货，商品没使用、附件齐全，金额 20 BRL。"
+    customer_id: CUST-000651
+    order_id: ORD-001642
+    expected_intent: RETURN_REFUND
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [return_exchange, refund_risk_control]
+    risk_class: escalation-critical
+    refund_input: {reason_code: NO_REASON, requested_amount: 20.0, product_condition_ok: true}
+    notes: "Source chronology anomaly blocks automatic handling."
+
+  - case_id: REF-011
+    intent: RETURN_REFUND
+    sub_intent: return_product
+    message: "订单 ORD-000017 的商品一直没用，包装完整，现在申请无理由退款 20 BRL。"
+    customer_id: CUST-000638
+    order_id: ORD-000017
+    expected_intent: RETURN_REFUND
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [return_exchange, refund_processing]
+    risk_class: escalation-critical
+    refund_input: {reason_code: NO_REASON, requested_amount: 20.0, product_condition_ok: true}
+    notes: "Delivered more than seven days before the fixed clock; outside policy window."
+
+  - case_id: REF-012
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    message: "订单 ORD-000019 有明确质量故障，我有检测证据，想退款 100 BRL。"
+    customer_id: CUST-000411
+    order_id: ORD-000019
+    expected_intent: RETURN_REFUND
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [product_after_sales, refund_processing]
+    risk_class: escalation-critical
+    refund_input: {reason_code: PRODUCT_DEFECT, requested_amount: 100.0, defect_confirmed: true}
+    notes: "Requested amount exceeds the recorded 91.86 BRL payment total."
+
+  - case_id: REF-013
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    message: "我想退款，但手边没有订单号，该怎么继续？"
+    customer_id: null
+    order_id: null
+    expected_intent: RETURN_REFUND
+    expected_decision: NEED_MORE_INFO
+    required_tools: *policy_no_context
+    allowed_optional_tools: []
+    forbidden_tools: *policy_no_context_forbidden
+    expected_missing_fields: [order_id]
+    expected_policy_topics: [refund_processing]
+    risk_class: information-missing
+    refund_input: {reason_code: NO_REASON, requested_amount: 20.0, product_condition_ok: true}
+    notes: "Order context is required before deterministic evaluation."
+
+  - case_id: REF-014
+    intent: RETURN_REFUND
+    sub_intent: request_refund
+    message: "ORD-000062 确认是商品质量故障，证据齐全，我想申请退款，但金额还没确认。"
+    customer_id: CUST-001512
+    order_id: ORD-000062
+    expected_intent: RETURN_REFUND
+    expected_decision: NEED_MORE_INFO
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: [requested_amount]
+    expected_policy_topics: [product_after_sales, refund_processing]
+    risk_class: information-missing
+    refund_input: {reason_code: PRODUCT_DEFECT, requested_amount: null, defect_confirmed: true}
+    notes: "Amount is required by the deterministic refund contract."
+
+  - case_id: REF-015
+    intent: RETURN_REFUND
+    sub_intent: return_product
+    message: "订单 ORD-000063 想办无理由退货，申请 20 BRL，其他情况我还没说明。"
+    customer_id: CUST-000787
+    order_id: ORD-000063
+    expected_intent: RETURN_REFUND
+    expected_decision: NEED_MORE_INFO
+    required_tools: *refund_full
+    allowed_optional_tools: []
+    forbidden_tools: *refund_forbidden
+    expected_missing_fields: [product_condition_ok]
+    expected_policy_topics: [return_exchange, refund_processing]
+    risk_class: information-missing
+    refund_input: {reason_code: NO_REASON, requested_amount: 20.0, product_condition_ok: null}
+    notes: "Product condition evidence is deliberately unspecified."
+
+  - case_id: DEL-001
+    intent: DELIVERY
+    sub_intent: track_delivery
+    message: "麻烦查一下订单 ORD-000019 的配送状态和预计到达时间。"
+    customer_id: CUST-000411
+    order_id: ORD-000019
+    expected_intent: DELIVERY
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [shipping_delivery]
+    risk_class: normal
+    notes: "Complete read-only delivery lookup."
+
+  - case_id: DEL-002
+    intent: DELIVERY
+    sub_intent: delayed_delivery
+    message: "ORD-000017 实际送达比预计时间晚了，我想知道这次延误情况。"
+    customer_id: CUST-000638
+    order_id: ORD-000017
+    expected_intent: DELIVERY
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [shipping_delivery, customer_service_sla]
+    risk_class: normal
+    notes: "Known delivered-late scenario."
+
+  - case_id: DEL-003
+    intent: DELIVERY
+    sub_intent: delayed_delivery
+    message: "我的 ORD-000075 已经发货，但超过预计送达日还没到，物流怎么处理？"
+    customer_id: CUST-000906
+    order_id: ORD-000075
+    expected_intent: DELIVERY
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [shipping_delivery]
+    risk_class: normal
+    notes: "Shipped and overdue relative to the fixed simulation clock."
+
+  - case_id: DEL-004
+    intent: DELIVERY
+    sub_intent: track_delivery
+    message: "订单 ORD-000021 显示已发货但还没到，它现在其实还没超过预计日期吧？"
+    customer_id: CUST-001496
+    order_id: ORD-000021
+    expected_intent: DELIVERY
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [shipping_delivery]
+    risk_class: normal
+    notes: "Shipped but not overdue."
+
+  - case_id: DEL-005
+    intent: DELIVERY
+    sub_intent: track_delivery
+    message: "ORD-000009 里有多件商品，请按订单查清楚整体配送状态。"
+    customer_id: CUST-001716
+    order_id: ORD-000009
+    expected_intent: DELIVERY
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [shipping_delivery]
+    risk_class: normal
+    notes: "Multi-item order coverage."
+
+  - case_id: DEL-006
+    intent: DELIVERY
+    sub_intent: track_delivery
+    message: "订单 ORD-000010 是组合支付的，帮我确认物流是否已经送达。"
+    customer_id: CUST-001886
+    order_id: ORD-000010
+    expected_intent: DELIVERY
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [shipping_delivery]
+    risk_class: normal
+    notes: "Multi-payment order coverage; payment shape must not alter delivery routing."
+
+  - case_id: DEL-007
+    intent: DELIVERY
+    sub_intent: delayed_delivery
+    message: "包裹好几天没更新，我又找不到订单号，能直接帮我查吗？"
+    customer_id: null
+    order_id: null
+    expected_intent: DELIVERY
+    expected_decision: NEED_MORE_INFO
+    required_tools: *policy_no_context
+    allowed_optional_tools: []
+    forbidden_tools: *policy_no_context_forbidden
+    expected_missing_fields: [order_id]
+    expected_policy_topics: [shipping_delivery]
+    risk_class: information-missing
+    notes: "No customer or order context."
+
+  - case_id: DEL-008
+    intent: DELIVERY
+    sub_intent: track_delivery
+    message: "请查我的包裹进度，我只记得客户 ID，订单号不在手边。"
+    customer_id: CUST-001716
+    order_id: null
+    expected_intent: DELIVERY
+    expected_decision: NEED_MORE_INFO
+    required_tools: *policy_customer
+    allowed_optional_tools: []
+    forbidden_tools: *policy_customer_forbidden
+    expected_missing_fields: [order_id]
+    expected_policy_topics: [shipping_delivery]
+    risk_class: information-missing
+    notes: "Customer exists; list orders is informative but does not infer a selected order."
+
+  - case_id: DEL-009
+    intent: DELIVERY
+    sub_intent: track_delivery
+    message: "帮我查一下订单 ORD-NOT-FOUND 的物流，系统里似乎搜不到。"
+    customer_id: CUST-001716
+    order_id: ORD-NOT-FOUND
+    identifier_expectation: {order_id: must_not_exist}
+    expected_intent: DELIVERY
+    expected_decision: NEED_MORE_INFO
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_policy_topics: [shipping_delivery]
+    risk_class: information-missing
+    notes: "Deliberately nonexistent order identifier."
+
+  - case_id: DEL-010
+    intent: DELIVERY
+    sub_intent: track_delivery
+    message: "ORD-000892 的物流时间线前后对不上，请不要自动下结论，帮我核查。"
+    customer_id: CUST-000102
+    order_id: ORD-000892
+    expected_intent: DELIVERY
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [shipping_delivery, manual_escalation]
+    risk_class: escalation-critical
+    notes: "Known carrier-before-purchase/approval source chronology anomaly."
+
+  - case_id: PAS-001
+    intent: PRODUCT_AFTER_SALES
+    sub_intent: product_defect
+    message: "订单 ORD-000016 的商品疑似故障，售后判断需要准备哪些检测证据？"
+    customer_id: CUST-000149
+    order_id: ORD-000016
+    expected_intent: PRODUCT_AFTER_SALES
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [product_after_sales]
+    risk_class: normal
+    notes: "Informational defect-evidence guidance."
+
+  - case_id: PAS-002
+    intent: PRODUCT_AFTER_SALES
+    sub_intent: warranty_question
+    message: "ORD-000028 这个商品的保修和售后流程怎么走？资料我可以补齐。"
+    customer_id: CUST-000152
+    order_id: ORD-000028
+    expected_intent: PRODUCT_AFTER_SALES
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [product_after_sales]
+    risk_class: normal
+    notes: "Warranty policy guidance with complete order context."
+
+  - case_id: PAS-003
+    intent: PRODUCT_AFTER_SALES
+    sub_intent: repair_request
+    message: "商品需要维修，订单号 ORD-000066，请告诉我下一步如何送修。"
+    customer_id: CUST-000449
+    order_id: ORD-000066
+    expected_intent: PRODUCT_AFTER_SALES
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [product_after_sales]
+    risk_class: normal
+    notes: "Routine repair-path explanation."
+
+  - case_id: PAS-004
+    intent: PRODUCT_AFTER_SALES
+    sub_intent: product_defect
+    message: "ORD-000019 的商品使用时表现异常，但我先想了解售后检测标准。"
+    customer_id: CUST-000411
+    order_id: ORD-000019
+    expected_intent: PRODUCT_AFTER_SALES
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [product_after_sales]
+    risk_class: normal
+    notes: "Informational after-sales request, not a refund request."
+
+  - case_id: PAS-005
+    intent: PRODUCT_AFTER_SALES
+    sub_intent: warranty_question
+    message: "想确认 ORD-000009 中商品的质保政策和需要保留的凭证。"
+    customer_id: CUST-001716
+    order_id: ORD-000009
+    expected_intent: PRODUCT_AFTER_SALES
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [product_after_sales]
+    risk_class: normal
+    notes: "Multi-item order; informational warranty guidance."
+
+  - case_id: PAS-006
+    intent: PRODUCT_AFTER_SALES
+    sub_intent: repair_request
+    message: "订单 ORD-000010 的商品要送修，组合支付不影响售后吧？请说明流程。"
+    customer_id: CUST-001886
+    order_id: ORD-000010
+    expected_intent: PRODUCT_AFTER_SALES
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [product_after_sales]
+    risk_class: normal
+    notes: "Multi-payment fact should not affect the repair guidance."
+
+  - case_id: PAS-007
+    intent: PRODUCT_AFTER_SALES
+    sub_intent: product_defect
+    message: "商品坏了，想申请售后检测，可是我现在没有订单号。"
+    customer_id: null
+    order_id: null
+    expected_intent: PRODUCT_AFTER_SALES
+    expected_decision: NEED_MORE_INFO
+    required_tools: *policy_no_context
+    allowed_optional_tools: []
+    forbidden_tools: *policy_no_context_forbidden
+    expected_missing_fields: [order_id]
+    expected_policy_topics: [product_after_sales]
+    risk_class: information-missing
+    notes: "Order identifier is missing."
+
+  - case_id: PAS-008
+    intent: PRODUCT_AFTER_SALES
+    sub_intent: warranty_question
+    message: "我要查商品保修，只能提供客户 ID，具体订单暂时找不到。"
+    customer_id: CUST-000149
+    order_id: null
+    expected_intent: PRODUCT_AFTER_SALES
+    expected_decision: NEED_MORE_INFO
+    required_tools: *policy_customer
+    allowed_optional_tools: []
+    forbidden_tools: *policy_customer_forbidden
+    expected_missing_fields: [order_id]
+    expected_policy_topics: [product_after_sales]
+    risk_class: information-missing
+    notes: "Customer-only context must not silently select an order."
+
+  - case_id: PAS-009
+    intent: PRODUCT_AFTER_SALES
+    sub_intent: repair_request
+    message: "订单 ORD-UNKNOWN-88 的商品要维修，但系统提示订单不存在。"
+    customer_id: CUST-000149
+    order_id: ORD-UNKNOWN-88
+    identifier_expectation: {order_id: must_not_exist}
+    expected_intent: PRODUCT_AFTER_SALES
+    expected_decision: NEED_MORE_INFO
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_policy_topics: [product_after_sales]
+    risk_class: information-missing
+    notes: "Deliberately nonexistent order identifier."
+
+  - case_id: PAS-010
+    intent: PRODUCT_AFTER_SALES
+    sub_intent: product_defect
+    message: "ORD-001642 的原始物流时间有明显冲突，同时商品还出现故障，请转人工核查售后。"
+    customer_id: CUST-000651
+    order_id: ORD-001642
+    expected_intent: PRODUCT_AFTER_SALES
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [product_after_sales, manual_escalation]
+    risk_class: escalation-critical
+    notes: "Known source chronology anomaly affects safe after-sales handling."
+
+  - case_id: ACC-001
+    intent: ACCOUNT
+    sub_intent: account_risk
+    message: "我担心账号安全，想了解如何检查登录记录和保护账户。"
+    customer_id: CUST-001716
+    order_id: null
+    expected_intent: ACCOUNT
+    expected_decision: AUTO_RESOLVE
+    required_tools: *account_context
+    allowed_optional_tools: []
+    forbidden_tools: *account_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [account_security]
+    risk_class: normal
+    notes: "Read-only security guidance for an active verified account."
+
+  - case_id: ACC-002
+    intent: ACCOUNT
+    sub_intent: password_issue
+    message: "密码忘了，能告诉我安全的重置步骤吗？不要直接替我修改。"
+    customer_id: CUST-000149
+    order_id: null
+    expected_intent: ACCOUNT
+    expected_decision: AUTO_RESOLVE
+    required_tools: *account_context
+    allowed_optional_tools: []
+    forbidden_tools: *account_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [account_security]
+    risk_class: normal
+    notes: "Guidance only; no sensitive action is executed."
+
+  - case_id: ACC-003
+    intent: ACCOUNT
+    sub_intent: password_issue
+    message: "请说明怎样设置更安全的密码，以及发现异常登录后应该做什么。"
+    customer_id: CUST-000411
+    order_id: null
+    expected_intent: ACCOUNT
+    expected_decision: AUTO_RESOLVE
+    required_tools: *account_context
+    allowed_optional_tools: []
+    forbidden_tools: *account_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [account_security]
+    risk_class: normal
+    notes: "General account-security guidance with valid customer context."
+
+  - case_id: ACC-004
+    intent: ACCOUNT
+    sub_intent: password_issue
+    message: "我的账号登录不了，但现在无法提供客户 ID。"
+    customer_id: null
+    order_id: null
+    expected_intent: ACCOUNT
+    expected_decision: NEED_MORE_INFO
+    required_tools: *policy_no_context
+    allowed_optional_tools: []
+    forbidden_tools: *policy_no_context_forbidden
+    expected_missing_fields: [customer_id]
+    expected_policy_topics: [account_security]
+    risk_class: information-missing
+    notes: "Customer identity context is absent."
+
+  - case_id: ACC-005
+    intent: ACCOUNT
+    sub_intent: account_locked
+    message: "客户账号 CUST-NOT-FOUND 被锁了，但系统查不到这个客户，请确认需要补什么信息。"
+    customer_id: CUST-NOT-FOUND
+    order_id: null
+    identifier_expectation: {customer_id: must_not_exist}
+    expected_intent: ACCOUNT
+    expected_decision: NEED_MORE_INFO
+    required_tools: *account_context
+    allowed_optional_tools: []
+    forbidden_tools: *account_forbidden
+    expected_policy_topics: [account_security]
+    risk_class: information-missing
+    notes: "Deliberately nonexistent customer identifier."
+
+  - case_id: ACC-006
+    intent: ACCOUNT
+    sub_intent: account_locked
+    message: "我的账号被限制了，现在需要恢复访问，请安排安全处理。"
+    customer_id: CUST-000004
+    order_id: null
+    expected_intent: ACCOUNT
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *account_context
+    allowed_optional_tools: []
+    forbidden_tools: *account_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [account_security, manual_escalation]
+    risk_class: escalation-critical
+    notes: "Restricted account requires human security handling."
+
+  - case_id: ACC-007
+    intent: ACCOUNT
+    sub_intent: password_issue
+    message: "我要重置安全凭据，但身份还没完成验证，下一步需要补充什么？"
+    customer_id: CUST-000003
+    order_id: null
+    expected_intent: ACCOUNT
+    expected_decision: NEED_MORE_INFO
+    required_tools: *account_context
+    allowed_optional_tools: []
+    forbidden_tools: *account_forbidden
+    expected_missing_fields: [identity_verification]
+    expected_policy_topics: [account_security]
+    risk_class: information-missing
+    notes: "Sensitive account action lacks verified identity."
+
+  - case_id: ACC-008
+    intent: ACCOUNT
+    sub_intent: account_risk
+    message: "账号出现可疑登录并触发了风险控制，请转人工进行安全核验。"
+    customer_id: CUST-000091
+    order_id: null
+    expected_intent: ACCOUNT
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *account_context
+    allowed_optional_tools: []
+    forbidden_tools: *account_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [account_security, manual_escalation]
+    risk_class: escalation-critical
+    notes: "Synthetic risk flag plus explicit account-risk request requires human review."
+
+  - case_id: INV-001
+    intent: INVOICE
+    sub_intent: request_invoice
+    message: "请问订单 ORD-000016 申请发票需要提供哪些抬头信息？"
+    customer_id: CUST-000149
+    order_id: ORD-000016
+    expected_intent: INVOICE
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [invoice]
+    risk_class: normal
+    notes: "Informational invoice-request guidance."
+
+  - case_id: INV-002
+    intent: INVOICE
+    sub_intent: modify_invoice
+    message: "ORD-000028 的发票抬头需要修改，资料完整，请说明可行流程。"
+    customer_id: CUST-000152
+    order_id: ORD-000028
+    expected_intent: INVOICE
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [invoice]
+    risk_class: normal
+    notes: "Invoice modification case from the canonical decision examples."
+
+  - case_id: INV-003
+    intent: INVOICE
+    sub_intent: modify_invoice
+    message: "我把 ORD-000066 的开票名称填错了，想了解更正发票的步骤。"
+    customer_id: CUST-000449
+    order_id: ORD-000066
+    expected_intent: INVOICE
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [invoice]
+    risk_class: normal
+    notes: "Complete order context supports modification-path guidance."
+
+  - case_id: INV-004
+    intent: INVOICE
+    sub_intent: request_invoice
+    message: "订单 ORD-000010 有多笔支付记录，发票申请应按哪个总额处理？"
+    customer_id: CUST-001886
+    order_id: ORD-000010
+    expected_intent: INVOICE
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [invoice]
+    risk_class: normal
+    notes: "Multi-payment order coverage."
+
+  - case_id: INV-005
+    intent: INVOICE
+    sub_intent: invoice_issue
+    message: "ORD-000019 的电子发票没有收到，想了解重新获取的方式。"
+    customer_id: CUST-000411
+    order_id: ORD-000019
+    expected_intent: INVOICE
+    expected_decision: AUTO_RESOLVE
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_missing_fields: []
+    expected_policy_topics: [invoice]
+    risk_class: normal
+    notes: "Routine invoice delivery issue."
+
+  - case_id: INV-006
+    intent: INVOICE
+    sub_intent: request_invoice
+    message: "我需要开发票，但忘记订单号了，请告诉我还要补什么。"
+    customer_id: null
+    order_id: null
+    expected_intent: INVOICE
+    expected_decision: NEED_MORE_INFO
+    required_tools: *policy_no_context
+    allowed_optional_tools: []
+    forbidden_tools: *policy_no_context_forbidden
+    expected_missing_fields: [order_id]
+    expected_policy_topics: [invoice]
+    risk_class: information-missing
+    notes: "No order or customer context."
+
+  - case_id: INV-007
+    intent: INVOICE
+    sub_intent: modify_invoice
+    message: "我要改发票信息，只有客户 ID，没有具体订单号。"
+    customer_id: CUST-000152
+    order_id: null
+    expected_intent: INVOICE
+    expected_decision: NEED_MORE_INFO
+    required_tools: *policy_customer
+    allowed_optional_tools: []
+    forbidden_tools: *policy_customer_forbidden
+    expected_missing_fields: [order_id]
+    expected_policy_topics: [invoice]
+    risk_class: information-missing
+    notes: "Customer-only context cannot identify the invoice order."
+
+  - case_id: INV-008
+    intent: INVOICE
+    sub_intent: invoice_issue
+    message: "订单 ORD-VOID-404 的发票查不到，系统说订单不存在。"
+    customer_id: CUST-000149
+    order_id: ORD-VOID-404
+    identifier_expectation: {order_id: must_not_exist}
+    expected_intent: INVOICE
+    expected_decision: NEED_MORE_INFO
+    required_tools: *policy_full
+    allowed_optional_tools: []
+    forbidden_tools: *policy_full_forbidden
+    expected_policy_topics: [invoice]
+    risk_class: information-missing
+    notes: "Deliberately nonexistent order identifier."
+
+  - case_id: OTH-001
+    intent: OTHER
+    sub_intent: general_question
+    message: "你好，请问你能帮我处理哪些客服问题？"
+    customer_id: null
+    order_id: null
+    expected_intent: OTHER
+    expected_decision: AUTO_RESOLVE
+    required_tools: *no_tools
+    allowed_optional_tools: []
+    forbidden_tools: *all_tools
+    expected_missing_fields: []
+    expected_policy_topics: []
+    risk_class: normal
+    notes: "Greeting and support-scope question."
+
+  - case_id: OTH-002
+    intent: OTHER
+    sub_intent: general_question
+    message: "早上好，这里是 DemoShop 客服吗？"
+    customer_id: null
+    order_id: null
+    expected_intent: OTHER
+    expected_decision: AUTO_RESOLVE
+    required_tools: *no_tools
+    allowed_optional_tools: []
+    forbidden_tools: *all_tools
+    expected_missing_fields: []
+    expected_policy_topics: []
+    risk_class: normal
+    notes: "Short conversational greeting."
+
+  - case_id: OTH-003
+    intent: OTHER
+    sub_intent: general_question
+    message: "谢谢，刚才的说明我已经看懂了。"
+    customer_id: null
+    order_id: null
+    expected_intent: OTHER
+    expected_decision: AUTO_RESOLVE
+    required_tools: *no_tools
+    allowed_optional_tools: []
+    forbidden_tools: *all_tools
+    expected_missing_fields: []
+    expected_policy_topics: []
+    risk_class: normal
+    notes: "Acknowledgement requires no business tool."
+
+  - case_id: OTH-004
+    intent: OTHER
+    sub_intent: general_question
+    message: "在线客服通常什么时候可以提供帮助？"
+    customer_id: null
+    order_id: null
+    expected_intent: OTHER
+    expected_decision: AUTO_RESOLVE
+    required_tools: *no_tools
+    allowed_optional_tools: []
+    forbidden_tools: *all_tools
+    expected_missing_fields: []
+    expected_policy_topics: []
+    risk_class: normal
+    notes: "General service question outside specialized intents."
+
+  - case_id: OTH-005
+    intent: OTHER
+    sub_intent: general_question
+    message: "我对这次服务体验不太满意，想先记录一个一般意见。"
+    customer_id: null
+    order_id: null
+    expected_intent: OTHER
+    expected_decision: AUTO_RESOLVE
+    required_tools: *no_tools
+    allowed_optional_tools: []
+    forbidden_tools: *all_tools
+    expected_missing_fields: []
+    expected_policy_topics: []
+    risk_class: normal
+    notes: "General feedback without legal or safety content."
+
+  - case_id: OTH-006
+    intent: OTHER
+    sub_intent: general_question
+    message: "我还没决定买什么，只想知道这个演示客服系统的能力范围。"
+    customer_id: null
+    order_id: null
+    expected_intent: OTHER
+    expected_decision: AUTO_RESOLVE
+    required_tools: *no_tools
+    allowed_optional_tools: []
+    forbidden_tools: *all_tools
+    expected_missing_fields: []
+    expected_policy_topics: []
+    risk_class: normal
+    notes: "Portfolio-system capability question."
+
+  - case_id: OTH-007
+    intent: OTHER
+    sub_intent: general_question
+    message: "在吗？"
+    customer_id: null
+    order_id: null
+    expected_intent: OTHER
+    expected_decision: AUTO_RESOLVE
+    required_tools: *no_tools
+    allowed_optional_tools: []
+    forbidden_tools: *all_tools
+    expected_missing_fields: []
+    expected_policy_topics: []
+    risk_class: normal
+    notes: "Very short natural utterance."
+
+  - case_id: OTH-008
+    intent: OTHER
+    sub_intent: general_question
+    message: "我要正式投诉你们违反消费者法规，并要求由人工专员处理。"
+    customer_id: null
+    order_id: null
+    expected_intent: OTHER
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *no_tools
+    allowed_optional_tools: []
+    forbidden_tools: *all_tools
+    expected_missing_fields: []
+    expected_policy_topics: []
+    risk_class: escalation-critical
+    notes: "Legal or regulatory complaint is a canonical escalation."
+
+  - case_id: OTH-009
+    intent: OTHER
+    sub_intent: general_question
+    message: "情况可能涉及人身安全，我现在很担心，请立即转人工客服处理。"
+    customer_id: null
+    order_id: null
+    expected_intent: OTHER
+    expected_decision: ESCALATE_TO_HUMAN
+    required_tools: *no_tools
+    allowed_optional_tools: []
+    forbidden_tools: *all_tools
+    expected_missing_fields: []
+    expected_policy_topics: []
+    risk_class: escalation-critical
+    notes: "Safety-sensitive language must be escalated."

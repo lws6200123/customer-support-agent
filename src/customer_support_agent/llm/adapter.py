@@ -116,7 +116,10 @@ class DeepSeekChatModel:
             (
                 "Classify and extract facts only. Use the supplied taxonomy exactly. Do not "
                 "invent customer_id or order_id, decide refund eligibility, modify data, or "
-                "force an unclear request into a non-OTHER intent. Preserve known identifiers."
+                "force an unclear request into a non-OTHER intent. Preserve known identifiers. "
+                "Set human_review_requested only when the customer explicitly asks for a human "
+                "review. Mark explicit legal/regulatory complaints and personal-safety-sensitive "
+                "requests with their dedicated booleans."
             ),
             {
                 "user_message": user_message,

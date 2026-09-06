@@ -1,0 +1,105 @@
+{
+  "case_count": 60,
+  "intent_accuracy": 1.0,
+  "intent_correct": 60,
+  "per_intent": {
+    "ACCOUNT": {
+      "total": 8,
+      "correct": 8,
+      "accuracy": 1.0
+    },
+    "DELIVERY": {
+      "total": 10,
+      "correct": 10,
+      "accuracy": 1.0
+    },
+    "INVOICE": {
+      "total": 8,
+      "correct": 8,
+      "accuracy": 1.0
+    },
+    "OTHER": {
+      "total": 9,
+      "correct": 9,
+      "accuracy": 1.0
+    },
+    "PRODUCT_AFTER_SALES": {
+      "total": 10,
+      "correct": 10,
+      "accuracy": 1.0
+    },
+    "RETURN_REFUND": {
+      "total": 15,
+      "correct": 15,
+      "accuracy": 1.0
+    }
+  },
+  "decision_accuracy": 0.85,
+  "decision_correct": 51,
+  "per_decision": {
+    "AUTO_RESOLVE": {
+      "total": 31,
+      "correct": 31,
+      "accuracy": 1.0
+    },
+    "NEED_MORE_INFO": {
+      "total": 15,
+      "correct": 14,
+      "accuracy": 0.9333333333333333
+    },
+    "ESCALATE_TO_HUMAN": {
+      "total": 14,
+      "correct": 6,
+      "accuracy": 0.42857142857142855
+    }
+  },
+  "escalation": {
+    "true_positive": 6,
+    "false_positive": 0,
+    "false_negative": 8,
+    "precision": 1.0,
+    "recall": 0.42857142857142855,
+    "f1": 0.6
+  },
+  "tools": {
+    "true_positive": 150,
+    "false_positive": 0,
+    "false_negative": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "exact_set_accuracy": 1.0
+  },
+  "task_success_rate": 0.85,
+  "task_success_count": 51,
+  "average_tool_calls": 2.5,
+  "latency_ms": {
+    "mean": 23391.354883333333,
+    "p50": 20424.3035,
+    "p95": 43033.24229999998,
+    "min": 7248.125,
+    "max": 117501.393
+  },
+  "failure_count": 9,
+  "system_error_rate": 0.0,
+  "system_error_count": 0,
+  "failure_taxonomy": {
+    "DECISION_ERROR": 8,
+    "MISSING_INFO_ROUTING_ERROR": 1
+  },
+  "escalation_critical": {
+    "total": 14,
+    "correctly_escalated": 6,
+    "missed_count": 8,
+    "missed_cases": [
+      "REF-006",
+      "REF-007",
+      "DEL-010",
+      "PAS-010",
+      "ACC-006",
+      "ACC-008",
+      "OTH-008",
+      "OTH-009"
+    ]
+  }
+}

@@ -126,6 +126,11 @@ def _classification(
     customer_id: str | None = None,
     order_id: str | None = None,
     amount: float | None = None,
+    reason_code: RefundReasonCode | None = RefundReasonCode.NO_REASON,
+    product_condition_ok: bool | None = None,
+    human_review_requested: bool = False,
+    legal_or_regulatory_complaint: bool = False,
+    safety_sensitive: bool = False,
 ) -> TicketClassification:
     refund = intent == Intent.RETURN_REFUND
     return TicketClassification(
@@ -135,9 +140,16 @@ def _classification(
         customer_id=customer_id,
         order_id=order_id,
         issue_summary="Structured test issue summary.",
-        reason_code=RefundReasonCode.NO_REASON if refund else None,
+        reason_code=(reason_code if refund else None),
         requested_amount=amount if refund else None,
-        product_condition_ok=True if refund else None,
+        product_condition_ok=(
+            product_condition_ok
+            if refund and product_condition_ok is not None
+            else True if refund else None
+        ),
+        human_review_requested=human_review_requested,
+        legal_or_regulatory_complaint=legal_or_regulatory_complaint,
+        safety_sensitive=safety_sensitive,
     )
 
 
@@ -271,6 +283,94 @@ def test_account_path_blocks_refund_action(stage5_engine) -> None:
     assert state["decision"] == Decision.AUTO_RESOLVE
     assert AgentAction.EVALUATE_REFUND not in state["planned_actions"]
     assert AgentAction.EVALUATE_REFUND not in state["completed_actions"]
+
+
+def test_generic_return_normalizes_no_special_reason(stage5_engine) -> None:
+    row = _candidate(stage5_engine)
+    state = _workflow(
+        stage5_engine,
+        _classification(
+            Intent.RETURN_REFUND,
+            "return_product",
+            customer_id=row.customer_id,
+            order_id=row.order_id,
+            amount=min(float(row.payment_total), 20.0),
+            reason_code=None,
+            product_condition_ok=True,
+        ),
+    ).run({"user_message": "I want to return the unused complete item."})
+    assert state["refund_result"] is not None
+    assert "reason_code" not in state["refund_result"].missing_fields
+
+
+def test_non_refund_source_data_anomaly_escalates(stage5_engine) -> None:
+    with stage5_engine.connect() as connection:
+        row = connection.execute(
+            select(Order.order_id, Order.customer_id)
+            .where(Order.source_data_quality_flag != "none")
+            .order_by(Order.order_id)
+            .limit(1)
+        ).one()
+    state = _workflow(
+        stage5_engine,
+        _classification(
+            Intent.DELIVERY,
+            "track_delivery",
+            customer_id=row.customer_id,
+            order_id=row.order_id,
+        ),
+    ).run({"user_message": "The recorded delivery timeline is inconsistent."})
+    assert state["order_source_data_quality_flag"] != "none"
+    assert state["decision"] == Decision.ESCALATE_TO_HUMAN
+
+
+@pytest.mark.parametrize(
+    ("profile_filter", "sub_intent", "expected", "missing"),
+    [
+        (CustomerSupportProfile.account_status != "active", "account_locked", Decision.ESCALATE_TO_HUMAN, []),
+        (CustomerSupportProfile.risk_flag.is_(True), "account_risk", Decision.ESCALATE_TO_HUMAN, []),
+        (
+            CustomerSupportProfile.identity_verified.is_(False),
+            "password_issue",
+            Decision.NEED_MORE_INFO,
+            ["identity_verification"],
+        ),
+    ],
+)
+def test_account_control_facts_drive_resolution(
+    stage5_engine, profile_filter, sub_intent: str, expected: Decision, missing: list[str]
+) -> None:
+    with stage5_engine.connect() as connection:
+        customer_id = connection.scalar(
+            select(CustomerSupportProfile.customer_id)
+            .where(profile_filter)
+            .order_by(CustomerSupportProfile.customer_id)
+            .limit(1)
+        )
+    assert customer_id is not None
+    state = _workflow(
+        stage5_engine,
+        _classification(Intent.ACCOUNT, sub_intent, customer_id=customer_id),
+    ).run({"user_message": "Please handle this account security request."})
+    assert state["decision"] == expected
+    assert state["missing_fields"] == missing
+
+
+@pytest.mark.parametrize(
+    "signal",
+    [
+        {"human_review_requested": True},
+        {"legal_or_regulatory_complaint": True},
+        {"safety_sensitive": True},
+    ],
+)
+def test_explicit_escalation_signals_route_to_human(stage5_engine, signal: dict[str, bool]) -> None:
+    state = _workflow(
+        stage5_engine,
+        _classification(Intent.OTHER, "general_question", **signal),
+    ).run({"user_message": "This request requires protected human handling."})
+    assert state["decision"] == Decision.ESCALATE_TO_HUMAN
+    assert state["tool_call_count"] == 0
 
 
 def test_other_path_uses_no_business_tool(stage5_engine) -> None:

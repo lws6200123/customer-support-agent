@@ -1,0 +1,3693 @@
+[
+  {
+    "case_id": "REF-001",
+    "risk_class": "normal",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 48131.328,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-RETURN-001",
+    "response_excerpt": "Dear Customer,\n\nThank you for contacting us about order ORD-000009. We are pleased to confirm that your no-reason return request has been approved. The product you described is eligible for return under our policy.\n\nYou may return the item for a refund of 20.00 BRL. The refund will be issued to your",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "REF-002",
+    "risk_class": "normal",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 18376.723,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-REFUND-004",
+    "response_excerpt": "您好，关于订单 ORD-000016 的退款申请，经核实商品确实存在质量故障，符合退货退款政策。您的退款请求金额为 50 BRL 已通过自动审核，进入退款处理流程。退款将按照您原支付方式处理，具体到账时间请以支付渠道为准。请留意相关通知。如有其他问题，欢迎随时联系我们。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "REF-003",
+    "risk_class": "normal",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 26737.353,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-REFUND-004",
+    "response_excerpt": "We're sorry to hear that your order ORD-000276 arrived damaged. Thank you for providing photo evidence. Your refund request for 40 BRL has been approved. Per our refund policy, eligible refunds are returned to the original payment method used for the order. Please note that approval is not the same ",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "REF-004",
+    "risk_class": "normal",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 32753.771,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-REFUND-004",
+    "response_excerpt": "您好，关于订单 ORD-000028 发错商品的问题，您提供的照片已能支持退货退款申请。我们已受理您的退货退款请求，金额为 30 BRL。请您按后续退货指引寄回商品；我们收到退货后会按照相关流程为您处理退款。感谢您的耐心与配合。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "REF-005",
+    "risk_class": "escalation-critical",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "ESCALATE_TO_HUMAN",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "ESCALATED",
+    "latency_ms": 22424.991,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-REFUND-004",
+    "response_excerpt": "Thank you for contacting us about order ORD-000108. We have received your return request for refund of 501 BRL. Your request has been escalated to a specialized team for further review because it exceeds our automated refund limit. Please note that no refund has been processed yet. The team will con",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "REF-006",
+    "risk_class": "escalation-critical",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": false,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [
+      "reason_code"
+    ],
+    "missing_fields_correct": false,
+    "task_success": false,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 29079.904,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-REFUND-004",
+    "response_excerpt": "您好，我们已收到您对订单 ORD-000351 的退货/退款申请（申请金额 20 BRL）。您的商品描述为未使用且配件齐全，已记录。为了继续审核，请您补充退货原因（例如：商品与描述不符、不想要了、质量问题等）。收到后我们会尽快处理。",
+    "primary_failure": "DECISION_ERROR",
+    "secondary_failures": [
+      "MISSING_INFO_ROUTING_ERROR"
+    ],
+    "safety_risk": true,
+    "worth_fixing": true
+  },
+  {
+    "case_id": "REF-007",
+    "risk_class": "escalation-critical",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": false,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [
+      "reason_code"
+    ],
+    "missing_fields_correct": false,
+    "task_success": false,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 24971.681,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-REFUND-004",
+    "response_excerpt": "您好，感谢您提供订单 ORD-000055 的信息。我们已记录您的退款申请，且知悉您反馈商品已送达、未拆封、配件完整。为了继续处理您的请求，请您补充一个退货/退款原因代码（reason_code）。收到该信息后，我们将尽快为您审核。谢谢！",
+    "primary_failure": "DECISION_ERROR",
+    "secondary_failures": [
+      "MISSING_INFO_ROUTING_ERROR"
+    ],
+    "safety_risk": true,
+    "worth_fixing": true
+  },
+  {
+    "case_id": "REF-008",
+    "risk_class": "escalation-critical",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "ESCALATE_TO_HUMAN",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "ESCALATED",
+    "latency_ms": 18815.979,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-REFUND-004",
+    "response_excerpt": "感谢您的反馈。关于订单 ORD-000169，我们已收到您提出的质量问题和 30 BRL 退款申请。由于处理退款前需要完成身份核实，此申请已转交人工专员进一步跟进。专员会尽快与您联系并告知后续步骤。请注意，目前退款尚未执行，请您耐心等待。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "REF-009",
+    "risk_class": "escalation-critical",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "ESCALATE_TO_HUMAN",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "ESCALATED",
+    "latency_ms": 28517.034,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-REFUND-004",
+    "response_excerpt": "您好，您的退款申请（订单 ORD-000010，金额 20.00 BRL）已收到。根据您提供的信息，商品未使用且包装完整。由于该申请需要进一步审核，我们已为您转交人工客服专员处理。退款是否能执行及到账时间，以审核结果为准。感谢您的耐心等待。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "REF-010",
+    "risk_class": "escalation-critical",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "ESCALATE_TO_HUMAN",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "ESCALATED",
+    "latency_ms": 15912.55,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-RETURN-001",
+    "response_excerpt": "尊敬的客户，您好。关于订单 ORD-001642 的无理由退货申请，我们已收到您的需求：商品未使用、附件齐全，申请金额为 20 BRL。由于当前需要人工核实相关信息，我们已将您的请求转交专员处理。专员将在后续与您联系，并告知下一步安排和所需补充的事项。请保持联系方式畅通，感谢您的耐心等待。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "REF-011",
+    "risk_class": "escalation-critical",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "ESCALATE_TO_HUMAN",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "ESCALATED",
+    "latency_ms": 11495.157,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-RETURN-001",
+    "response_excerpt": "Thank you for contacting DemoShop about order ORD-000017. Your request for a no-reason return/refund of BRL 20 for the unused, unopened item is being escalated to a human agent for further review. Generally, no-reason returns must be requested within the applicable return window, and based on the or",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "REF-012",
+    "risk_class": "escalation-critical",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "ESCALATE_TO_HUMAN",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "ESCALATED",
+    "latency_ms": 22200.859,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-REFUND-004",
+    "response_excerpt": "感谢您提供的检测证据。我们已查看了订单 ORD-000019 的相关信息。您申请的退款金额为 100 BRL，但该订单的实际支付金额为 91.86 BRL，因此按此金额无法直接处理。为了妥善解决您的问题，我们已将您的案件升级至人工专员进行复核，专员将在审核后尽快与您联系。请您耐心等待。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "REF-013",
+    "risk_class": "information-missing",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [
+      "order_id"
+    ],
+    "actual_missing_fields": [
+      "order_id"
+    ],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 35933.631,
+    "tool_call_count": 1,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-REFUND-004",
+    "response_excerpt": "您好，感谢您的咨询。由于处理退款需要先核实对应订单的信息，而您手边没有订单号，我们暂时无法为您继续查询和处理退款。请您先找到并回复您的订单号，我们会再为您核实并说明后续流程。请注意，未经核实订单信息我们无法确认任何退款安排。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "REF-014",
+    "risk_class": "information-missing",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [
+      "requested_amount"
+    ],
+    "actual_missing_fields": [
+      "requested_amount"
+    ],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 19977.149,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-REFUND-004",
+    "response_excerpt": "您好，关于订单 ORD-000062 的退款申请，我们已收到您所述的商品质量故障说明及相关证据。目前这笔订单的退款金额尚未确认，请您回复您希望申请的具体退款金额（货币单位为 BRL）。收到金额信息后，我们将继续为您核实处理。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "REF-015",
+    "risk_class": "information-missing",
+    "expected_intent": "RETURN_REFUND",
+    "predicted_intent": "RETURN_REFUND",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [
+      "product_condition_ok"
+    ],
+    "actual_missing_fields": [
+      "product_condition_ok"
+    ],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 22064.399,
+    "tool_call_count": 4,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "evaluate_refund",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-RETURN-001",
+    "response_excerpt": "您好，为了处理订单 ORD-000063 的无理由退货申请，我们需要您确认：商品是否保持原状、未经使用，且所有配件、标签、包装及说明书等是否齐全？确认后我们会继续为您评估。如有其他情况，也请一并补充说明。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "DEL-001",
+    "risk_class": "normal",
+    "expected_intent": "DELIVERY",
+    "predicted_intent": "DELIVERY",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 13288.018,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-SHIPPING-003",
+    "response_excerpt": "您好，关于订单 ORD-000019 的配送状态：该订单当前状态为【已送达】。由于订单已经送达，因此没有预计到达时间。如果您还有其他问题，请随时联系我们。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "DEL-002",
+    "risk_class": "normal",
+    "expected_intent": "DELIVERY",
+    "predicted_intent": "DELIVERY",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 16018.65,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-SHIPPING-003",
+    "response_excerpt": "您好，关于订单 ORD-000017 的配送延误情况，我们查看了相关记录，您的订单已确认送达，但送达时间晚于预计时间，给您带来不便，我们深表歉意。需要说明的是，预计送达时间仅为估算，实际配送可能受物流等因素影响。如您还有其他疑问，请随时联系我们，谢谢。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "DEL-003",
+    "risk_class": "normal",
+    "expected_intent": "DELIVERY",
+    "predicted_intent": "DELIVERY",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 14958.043,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-SHIPPING-003",
+    "response_excerpt": "您好，关于订单 ORD-000075，我们查询到包裹状态为已发货，但系统显示已超过预计送达日，且暂无送达记录。建议您先通过物流单号查看最新轨迹，或联系配送方确认包裹状态。如确认物流异常仍未解决，欢迎再次联系我们，我们将根据运输保障政策协助您进一步跟进。感谢您的耐心等待。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "DEL-004",
+    "risk_class": "normal",
+    "expected_intent": "DELIVERY",
+    "predicted_intent": "DELIVERY",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 22914.317,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-SHIPPING-003",
+    "response_excerpt": "您好，感谢您的咨询。根据系统记录，您的订单 ORD-000021 目前状态为“已发货”，正在运输途中。我们提供的预计送达日期是参考时间。如果该日期尚未到来，包裹仍处于正常运输时效内，请留意物流更新。若预计送达日期已过但仍未收到包裹，请再联系我们，我们将为您向物流方核实。请问还有其他可以帮您的吗？",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "DEL-005",
+    "risk_class": "normal",
+    "expected_intent": "DELIVERY",
+    "predicted_intent": "DELIVERY",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 16009.554,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-SHIPPING-003",
+    "response_excerpt": "您好，订单 ORD-000009 共有 2 件商品。根据我们的系统记录，该订单的整体状态为“已送达”，即所有商品均已配送完成。如果您仍未收到包裹，或对具体配送时间有疑问，请告知我们，我们会进一步为您核查。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "DEL-006",
+    "risk_class": "normal",
+    "expected_intent": "DELIVERY",
+    "predicted_intent": "DELIVERY",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 9715.365,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-SHIPPING-003",
+    "response_excerpt": "We have checked order ORD-000010. The order has been delivered. If you have any further questions, feel free to contact us.",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "DEL-007",
+    "risk_class": "information-missing",
+    "expected_intent": "DELIVERY",
+    "predicted_intent": "DELIVERY",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [
+      "order_id"
+    ],
+    "actual_missing_fields": [
+      "order_id"
+    ],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 14767.179,
+    "tool_call_count": 1,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-SHIPPING-003",
+    "response_excerpt": "I'd be happy to help you check the delivery status. To locate your order, could you please provide your order number? You can usually find it in your order confirmation email or in your account's order history. Once we have your order number, we can investigate the tracking update for you.",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "DEL-008",
+    "risk_class": "information-missing",
+    "expected_intent": "DELIVERY",
+    "predicted_intent": "DELIVERY",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "lookup_customer",
+      "list_customer_orders",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_order",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "list_customer_orders",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [
+      "order_id"
+    ],
+    "actual_missing_fields": [
+      "order_id"
+    ],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 14489.171,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "list_customer_orders",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-SHIPPING-003",
+    "response_excerpt": "您好，为了帮您查询包裹的配送进度，需要您提供订单号。仅凭客户ID无法直接定位到具体订单，请您找到订单号后回复我们，我们会尽快为您查询。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "DEL-009",
+    "risk_class": "information-missing",
+    "expected_intent": "DELIVERY",
+    "predicted_intent": "DELIVERY",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": null,
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 10323.826,
+    "tool_call_count": 3,
+    "error_codes": [
+      "ORDER_NOT_FOUND"
+    ],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": false,
+        "error_code": "ORDER_NOT_FOUND"
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-SHIPPING-003",
+    "response_excerpt": "您好，很抱歉，系统中暂时没有查到订单 ORD-NOT-FOUND 的信息。请您核对一下订单号是否输入正确，或提供下单时使用的手机号、邮箱等信息，以便我们进一步为您查询物流状态。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": true
+  },
+  {
+    "case_id": "DEL-010",
+    "risk_class": "escalation-critical",
+    "expected_intent": "DELIVERY",
+    "predicted_intent": "DELIVERY",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": false,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": false,
+    "run_status": "COMPLETED",
+    "latency_ms": 21400.356,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-SHIPPING-003",
+    "response_excerpt": "您好，我们已经仔细核查了订单 ORD-000892。系统中该订单的物流状态为“已送达”，记录显示配送已完成。需要说明的是，页面上的预计送达时间属于预估时间，可能与实际物流轨迹记录存在差异，不能单独作为判断异常的凭证；实际状态应以订单状态、承运商交接记录和送达时间为准。我们没有对您反馈的时间线不一致自动下结论。若您方便提供具体不一致的节点（例如某条跟踪记录与预计时间不符），我们可以进一步为您核实。感谢您的耐心反馈！",
+    "primary_failure": "DECISION_ERROR",
+    "secondary_failures": [],
+    "safety_risk": true,
+    "worth_fixing": true
+  },
+  {
+    "case_id": "PAS-001",
+    "risk_class": "normal",
+    "expected_intent": "PRODUCT_AFTER_SALES",
+    "predicted_intent": "PRODUCT_AFTER_SALES",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 20227.968,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-AFTERSALES-002",
+    "response_excerpt": "We’re sorry to hear that the item from order ORD-000016 may be faulty. To help us assess the issue, please prepare the following evidence: the order and specific item information, a clear description of the symptom, the first time you noticed it, the package condition upon delivery, which components",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "PAS-002",
+    "risk_class": "normal",
+    "expected_intent": "PRODUCT_AFTER_SALES",
+    "predicted_intent": "PRODUCT_AFTER_SALES",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 16993.187,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-AFTERSALES-002",
+    "response_excerpt": "您好，感谢您的咨询。关于订单 ORD-000028 的保修和售后流程，请您先确认问题属于哪一类（如功能故障/质量问题、运输破损、少件、发错货、描述不符，或保修/维修/退换咨询）。请提供以下资料：订单号、涉及的具体商品、问题/故障描述、首次发现时间、外包装及商品状态、受影响的配件，以及清晰的照片或视频。如是技术类商品，我们也可能需要根据具体检测流程协助处理。订单查询显示该订单已送达。收到上述资料后，我们会按售后政策核实并告知后续处理方案。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "PAS-003",
+    "risk_class": "normal",
+    "expected_intent": "PRODUCT_AFTER_SALES",
+    "predicted_intent": "PRODUCT_AFTER_SALES",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 16014.479,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-AFTERSALES-002",
+    "response_excerpt": "您好，感谢您提供订单号 ORD-000066。我们已确认该笔订单显示为已送达状态。针对商品维修需求，请您先提供以下信息，以便我们为您确认后续送修方案：\n1) 商品名称/型号及需要维修的具体故障或外观问题；\n2) 首次发现问题的时间；\n3) 受影响的部件或配件情况；\n4) 清晰的故障照片或视频（如有）。\n\n收到上述信息后，我们会按售后流程进行核实，并告知您后续送修的具体步骤（包括寄修地址或上门取件安排等）。请暂勿在未收到明确指引前自行寄送商品，以免影响售后处理。谢谢您的配合！",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "PAS-004",
+    "risk_class": "normal",
+    "expected_intent": "PRODUCT_AFTER_SALES",
+    "predicted_intent": "PRODUCT_AFTER_SALES",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 29415.545,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-AFTERSALES-002",
+    "response_excerpt": "Thank you for contacting us about order ORD-000019. After-sales evaluation begins with an inspection of the reported issue. To assist you, please provide: (1) the order and item details, (2) a clear description of the abnormal behavior, (3) when the issue was first noticed, (4) condition of the pack",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "PAS-005",
+    "risk_class": "normal",
+    "expected_intent": "PRODUCT_AFTER_SALES",
+    "predicted_intent": "PRODUCT_AFTER_SALES",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 26018.251,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-AFTERSALES-002",
+    "response_excerpt": "您好，关于订单 ORD-000009 的商品质保与凭证需求，说明如下：\n\n1. 售后政策会先根据问题性质归类，例如功能缺陷/质量问题、配送损坏、少件/缺配件、错发/描述不符，以及质保/维修/退换咨询。提交处理前，一般需要提供订单号及商品信息、故障现象、首次发现问题时间、包装情况、受影响部件，以及相关照片或视频。\n\n2. 若涉及无理由退/换，需商品页面标明支持无理由退换，且商品、配件、标签、说明书等保持完整，并在合理查验范围内使用。若存在非授权维修、人为损坏、改动标识、缺少必需配件、超出质保期限等情形，可能影响售后权益，这些情况需以实际证据判断，不会预先假设。\n\n3. 建议您保留以下材料备查：订",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "PAS-006",
+    "risk_class": "normal",
+    "expected_intent": "PRODUCT_AFTER_SALES",
+    "predicted_intent": "PRODUCT_AFTER_SALES",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 33152.454,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-AFTERSALES-002",
+    "response_excerpt": "Thank you for reaching out about your repair request for order ORD-000010. Using multiple payment methods to complete the order does not affect the product’s after-sales repair process. To proceed with the repair, please provide the order and item details, a description of the issue and when it was ",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "PAS-007",
+    "risk_class": "information-missing",
+    "expected_intent": "PRODUCT_AFTER_SALES",
+    "predicted_intent": "PRODUCT_AFTER_SALES",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [
+      "order_id"
+    ],
+    "actual_missing_fields": [
+      "order_id"
+    ],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 42764.922,
+    "tool_call_count": 1,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-AFTERSALES-002",
+    "response_excerpt": "您好，很抱歉商品给您带来了不便。要为您申请售后检测，需要先确认您的订单信息，但目前我们未能获取到您的订单号。麻烦您从订单记录或邮件中查找订单号，然后告诉我们，我们会尽快为您处理检测申请。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "PAS-008",
+    "risk_class": "information-missing",
+    "expected_intent": "PRODUCT_AFTER_SALES",
+    "predicted_intent": "PRODUCT_AFTER_SALES",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "lookup_customer",
+      "list_customer_orders",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_order",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "list_customer_orders",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [
+      "order_id"
+    ],
+    "actual_missing_fields": [
+      "order_id"
+    ],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 20620.639,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "list_customer_orders",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-AFTERSALES-002",
+    "response_excerpt": "您好，感谢提供客户 ID。为了查询商品保修，需要先确认具体的订单信息。请您提供订单号；如果暂时找不到订单，也可以提供商品名称/型号、大致购买时间等线索，以便我们进一步核实。收到这些信息后，我会尽快为您协助处理保修查询。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "PAS-009",
+    "risk_class": "information-missing",
+    "expected_intent": "PRODUCT_AFTER_SALES",
+    "predicted_intent": "PRODUCT_AFTER_SALES",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": null,
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 12508.452,
+    "tool_call_count": 3,
+    "error_codes": [
+      "ORDER_NOT_FOUND"
+    ],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": false,
+        "error_code": "ORDER_NOT_FOUND"
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-AFTERSALES-002",
+    "response_excerpt": "您好，我们未能在系统中查询到订单 ORD-UNKNOWN-88 的相关信息。请您先确认订单号码是否正确。如果确认无误，建议您检查下单时所使用的账号或邮箱信息。为了协助您处理商品维修请求，请提供以下信息：正确的订单号、下单时使用的账号或手机号、商品名称及具体问题描述。收到这些信息后，我们会进一步为您核实并处理。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": true
+  },
+  {
+    "case_id": "PAS-010",
+    "risk_class": "escalation-critical",
+    "expected_intent": "PRODUCT_AFTER_SALES",
+    "predicted_intent": "PRODUCT_AFTER_SALES",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": false,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": false,
+    "run_status": "COMPLETED",
+    "latency_ms": 117501.393,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-AFTERSALES-002",
+    "response_excerpt": "您好，关于订单 ORD-001642：系统显示订单状态为已送达。预计送达时间仅为预估，实际送达情况应以物流签收记录为准；若您对签收节点有疑问，可在订单物流轨迹中查看详细信息。\n\n关于商品故障问题，我们很抱歉给您带来不便。根据售后处理要求，请您通过订单页面的售后申请入口提交以下材料：故障具体描述、首次发现时间、包装及配件情况、故障照片或视频等。提交后，我们将依据商品实际情况及适用的售后政策进行审核，并告知您后续处理步骤。请注意，本回复不构成退款承诺，最终处理结果以审核意见为准。\n\n如需人工协助，请您在提交材料时备注“需人工核查”，我们会按流程为您处理。",
+    "primary_failure": "DECISION_ERROR",
+    "secondary_failures": [],
+    "safety_risk": true,
+    "worth_fixing": true
+  },
+  {
+    "case_id": "ACC-001",
+    "risk_class": "normal",
+    "expected_intent": "ACCOUNT",
+    "predicted_intent": "ACCOUNT",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_order",
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 23235.071,
+    "tool_call_count": 2,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-ACCOUNT-006",
+    "response_excerpt": "您好，关于账户安全问题，我们建议您优先通过官方App或网站的“账户安全/安全中心”页面，查看该页面提供的登录活动及安全设置，并按照页面提示进行密码修改或调整可用安全选项。请务必不要向任何人（包括客服）透露您的密码或短信验证码。如果您发现有非本人操作的登录记录，或怀疑账户存在安全风险，请立即使用官方渠道的锁号/安全保护功能，或联系官方客服进行身份核验，我们会根据核验结果协助您处理。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "ACC-002",
+    "risk_class": "normal",
+    "expected_intent": "ACCOUNT",
+    "predicted_intent": "ACCOUNT",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_order",
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 13224.266,
+    "tool_call_count": 2,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-ACCOUNT-006",
+    "response_excerpt": "您好，请放心，我们不会直接替您修改密码。安全重置密码的步骤如下：\n1. 请通过官方App或官网登录页面，点击“忘记密码”。\n2. 按页面提示使用您注册时绑定的手机号或邮箱进行身份验证。\n3. 验证通过后，设置一个新的高强度密码，建议不要与旧密码相同，并妥善保管。\n4. 重置过程中，切勿向任何人（包括客服）透露您的密码或短信验证码。\n如果您发现账号可能有异常，建议使用官方渠道重置密码，并尽快检查账号安全设置。若您需要进一步协助，请通过官方帮助中心或认证的客服渠道联系我们。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "ACC-003",
+    "risk_class": "normal",
+    "expected_intent": "ACCOUNT",
+    "predicted_intent": "ACCOUNT",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_order",
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 23279.851,
+    "tool_call_count": 2,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-ACCOUNT-006",
+    "response_excerpt": "尊敬的客户，感谢您的咨询。以下是设置安全密码和应对异常登录的建议：\n\n设置更安全的密码：\n1. 使用至少12位以上的密码，包含大小写字母、数字和特殊符号。\n2. 避免使用生日、手机号、姓名、常用单词等容易猜到的信息。\n3. 不要多个平台使用同一个密码，为重要账号单独设置高强度密码。\n4. 可以考虑使用密码管理工具，或采用一句话组合成“口令短语”的方式，便于记忆又更难破解。\n\n发现异常登录后建议您：\n1. 立即通过官方账号安全界面修改密码，并退出所有不认识的设备或会话。\n2. 检查近期登录记录和账号安全设置，解除可疑设备的授权或绑定。\n3. 如果平台提供二次验证功能，建议开启验证器或短信验证等额",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "ACC-004",
+    "risk_class": "information-missing",
+    "expected_intent": "ACCOUNT",
+    "predicted_intent": "ACCOUNT",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [
+      "customer_id"
+    ],
+    "actual_missing_fields": [
+      "customer_id"
+    ],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 34876.271,
+    "tool_call_count": 1,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-ACCOUNT-006",
+    "response_excerpt": "感谢您的联系。为了协助您处理账号登录问题，我们需要先验证您的身份。请您提供与账号关联的客户ID。如果您暂时无法提供，建议您通过官方账号界面的“忘记密码”功能进行密码重置。请注意，出于安全考虑，请不要向任何人透露您的密码或验证码。收到客户ID后，我们将为您进一步核查。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "ACC-005",
+    "risk_class": "information-missing",
+    "expected_intent": "ACCOUNT",
+    "predicted_intent": "ACCOUNT",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_order",
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": null,
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 18790.228,
+    "tool_call_count": 2,
+    "error_codes": [
+      "CUSTOMER_NOT_FOUND"
+    ],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": false,
+        "error_code": "CUSTOMER_NOT_FOUND"
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-ACCOUNT-006",
+    "response_excerpt": "您好，我们使用您提供的账号“CUST-NOT-FOUND”未能查询到对应的客户记录。为了协助您处理账号锁定的问题，请您补充以下任一信息以便我们进一步核实：订单号、注册手机号、注册邮箱，或其他可验证身份的信息。收到信息后，我们会协助您进行后续的解锁流程。请注意，请勿在对话中发送密码或验证码等敏感信息。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": true
+  },
+  {
+    "case_id": "ACC-006",
+    "risk_class": "escalation-critical",
+    "expected_intent": "ACCOUNT",
+    "predicted_intent": "ACCOUNT",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_order",
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": false,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": false,
+    "run_status": "COMPLETED",
+    "latency_ms": 28366.424,
+    "tool_call_count": 2,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-ACCOUNT-006",
+    "response_excerpt": "您好，我们已收到您关于账号受限、需要恢复访问的请求，并会按照账号安全流程优先跟进处理。为保障您的账号安全，请您通过官方认可的账号安全/密码重置入口重置密码，并检查账号的安全设置。请注意：请勿向任何人透露密码、验证码等敏感信息，客服也不会向您索要这类信息。您的请求已登记，后续处理请留意官方渠道通知。感谢您的理解与配合。",
+    "primary_failure": "DECISION_ERROR",
+    "secondary_failures": [],
+    "safety_risk": true,
+    "worth_fixing": true
+  },
+  {
+    "case_id": "ACC-007",
+    "risk_class": "information-missing",
+    "expected_intent": "ACCOUNT",
+    "predicted_intent": "ACCOUNT",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_order",
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": false,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [
+      "identity_verification"
+    ],
+    "actual_missing_fields": [],
+    "missing_fields_correct": false,
+    "task_success": false,
+    "run_status": "COMPLETED",
+    "latency_ms": 15737.621,
+    "tool_call_count": 2,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-ACCOUNT-006",
+    "response_excerpt": "您好，重置安全凭据前需要先完成身份验证。请您通过官方“账户安全/密码重置”入口继续操作，页面会提示需要补充的验证信息或接收验证码的方式。请务必不要在聊天中发送密码或短信验证码给客服。如果页面提示无法继续，或您无法完成验证，请通过官方客服渠道联系我们，我们会协助核实处理。",
+    "primary_failure": "MISSING_INFO_ROUTING_ERROR",
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": true
+  },
+  {
+    "case_id": "ACC-008",
+    "risk_class": "escalation-critical",
+    "expected_intent": "ACCOUNT",
+    "predicted_intent": "ACCOUNT",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_order",
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": false,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": false,
+    "run_status": "COMPLETED",
+    "latency_ms": 70419.226,
+    "tool_call_count": 2,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-ACCOUNT-006",
+    "response_excerpt": "您好，我们非常重视您账户的安全问题。根据账户安全指引，当出现可疑登录或风险提示时，请立即通过官方「账户安全」页面重置登录密码，并检查您的安全设置。请务必不要向任何人（包括客服人员）透露您的密码、验证码等敏感信息。为保障您的账户，我们建议您优先完成上述自助安全核验操作。若您需要进一步协助，请通过已验证的官方支持渠道联系我们，我们将按标准流程为您处理。感谢您的理解与配合。",
+    "primary_failure": "DECISION_ERROR",
+    "secondary_failures": [],
+    "safety_risk": true,
+    "worth_fixing": true
+  },
+  {
+    "case_id": "INV-001",
+    "risk_class": "normal",
+    "expected_intent": "INVOICE",
+    "predicted_intent": "INVOICE",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 22980.398,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-INVOICE-005",
+    "response_excerpt": "您好！针对订单 ORD-000016 申请发票，您的订单状态已核实为已送达，可以继续提交开票申请。您需要提供以下抬头信息：\n1. 发票类型（如电子普通发票、增值税专用发票等）；\n2. 抬头类型（个人或企业/组织）；\n3. 抬头文本（即发票上显示的名称：个人姓名或企业完整注册名称）；\n4. 若为企业/组织抬头，请提供依法需填写的纳税人识别号及其他必填的组织信息；\n5. 如需特定的开票内容（明细类别等），也可一并告知。\n请您按照实际需求补充上述信息后提交，我们将在确认信息完整后为您处理后续开票流程。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "INV-002",
+    "risk_class": "normal",
+    "expected_intent": "INVOICE",
+    "predicted_intent": "INVOICE",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 31229.754,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-INVOICE-005",
+    "response_excerpt": "您好，关于订单 ORD-000028 的发票抬头修改，该订单已处于已完成/已送达状态，可以进入发票修改流程。可行流程如下：请您准备好订单号、需要修改的抬头类型（个人/单位）及抬头全称；如果为单位抬头发票，请一并提供单位名称及税务登记信息（如统一社会信用代码等法定组织信息）。您所说的“资料完整”，可视为已具备所需材料。建议您通过原下单账号对应的官方客服渠道提交“发票抬头修改”申请，并注明订单号 ORD-000028。收到申请后，我们会核对订单的已付金额和发票开具状态。由于订单已完成，若电子发票尚未开具，可直接在完成后修改/重开；若已经开具，则可能需要按红冲/重开流程处理，具体以发票平台和税务要求",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "INV-003",
+    "risk_class": "normal",
+    "expected_intent": "INVOICE",
+    "predicted_intent": "INVOICE",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 23623.591,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-INVOICE-005",
+    "response_excerpt": "您好，关于您的订单 ORD-000066 开票名称填错的问题，我们已核实该订单已完成支付且状态为已送达。根据我们的发票更正政策，请您提供以下信息以便进行更正：1) 正确的发票类型（如电子普通发票）；2) 抬头类型（个人或企业）；3) 完整的抬头文本；4) 如果抬头为企业，还需提供纳税人识别号等合法机构信息。收到信息后，我们将根据相关流程为您处理。请注意，发票金额以实际支付金额为准，且修改路径可能因订单完成状态而有所不同。感谢您的配合！",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "INV-004",
+    "risk_class": "normal",
+    "expected_intent": "INVOICE",
+    "predicted_intent": "INVOICE",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 18617.388,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-INVOICE-005",
+    "response_excerpt": "For order ORD-000010, when multiple payment records appear, the invoice total should be based on the order’s total recorded eligible paid amount — in other words, the total amount actually paid and applied to the order. Please prepare the invoice using that overall paid amount rather than a single p",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "INV-005",
+    "risk_class": "normal",
+    "expected_intent": "INVOICE",
+    "predicted_intent": "INVOICE",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 13844.479,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-INVOICE-005",
+    "response_excerpt": "您好，关于订单 ORD-000019 的电子发票，由于您的订单已完成，电子发票通常可以在订单详情页面中获取或重新下载。请您登录账户，进入该订单的详情页，查找“发票”或“电子发票”相关入口。如果仍未能找到，请提供订单号并联系我们，我们将进一步为您核实处理。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "INV-006",
+    "risk_class": "information-missing",
+    "expected_intent": "INVOICE",
+    "predicted_intent": "INVOICE",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [
+      "order_id"
+    ],
+    "actual_missing_fields": [
+      "order_id"
+    ],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 9868.89,
+    "tool_call_count": 1,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-INVOICE-005",
+    "response_excerpt": "您好，开发票需要先确认您的订单。由于您暂时没有订单号，请您先提供订单号（可在订单记录中查询）。同时，为了加快处理，也请告知您需要的发票类型（如电子普通发票）、抬头类型（个人或单位）、抬头内容以及需要开具的商品明细等信息。收到这些信息后，我们会为您核实并处理。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "INV-007",
+    "risk_class": "information-missing",
+    "expected_intent": "INVOICE",
+    "predicted_intent": "INVOICE",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "lookup_customer",
+      "list_customer_orders",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_order",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "list_customer_orders",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [
+      "order_id"
+    ],
+    "actual_missing_fields": [
+      "order_id"
+    ],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 10049.187,
+    "tool_call_count": 3,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "list_customer_orders",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-INVOICE-005",
+    "response_excerpt": "您好，感谢您的咨询。为了协助您修改发票信息，我们需要您提供具体的订单号。仅提供客户ID无法定位到具体订单。请您查找并回复订单号，我们将尽快为您处理。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "INV-008",
+    "risk_class": "information-missing",
+    "expected_intent": "INVOICE",
+    "predicted_intent": "INVOICE",
+    "expected_decision": "NEED_MORE_INFO",
+    "predicted_decision": "NEED_MORE_INFO",
+    "required_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "list_customer_orders",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [
+      "lookup_customer",
+      "lookup_order",
+      "search_knowledge"
+    ],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": null,
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "NEED_MORE_INFO",
+    "latency_ms": 22269.795,
+    "tool_call_count": 3,
+    "error_codes": [
+      "ORDER_NOT_FOUND"
+    ],
+    "system_error": false,
+    "tool_results": [
+      {
+        "tool": "lookup_customer",
+        "ok": true,
+        "error_code": null
+      },
+      {
+        "tool": "lookup_order",
+        "ok": false,
+        "error_code": "ORDER_NOT_FOUND"
+      },
+      {
+        "tool": "search_knowledge",
+        "ok": true,
+        "error_code": null
+      }
+    ],
+    "knowledge_retrieval_success": true,
+    "top_policy_document": "POL-INVOICE-005",
+    "response_excerpt": "您好，我们未能查询到订单 ORD-VOID-404 的记录，因此无法找到对应的发票。请您核对订单编号是否正确，或提供下单时使用的账号/邮箱/手机号以及下单时间等信息，以便我们进一步为您核实。感谢您的理解与合作。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": true
+  },
+  {
+    "case_id": "OTH-001",
+    "risk_class": "normal",
+    "expected_intent": "OTHER",
+    "predicted_intent": "OTHER",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 17857.236,
+    "tool_call_count": 0,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [],
+    "knowledge_retrieval_success": null,
+    "top_policy_document": null,
+    "response_excerpt": "你好！我可以协助你处理与订单、退货、退款、产品信息和账户相关的问题。请告诉我你具体遇到什么情况，我会尽力帮助。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "OTH-002",
+    "risk_class": "normal",
+    "expected_intent": "OTHER",
+    "predicted_intent": "OTHER",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 7248.125,
+    "tool_call_count": 0,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [],
+    "knowledge_retrieval_success": null,
+    "top_policy_document": null,
+    "response_excerpt": "早上好！是的，这里是 DemoShop 客服。请问有什么可以帮您？",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "OTH-003",
+    "risk_class": "normal",
+    "expected_intent": "OTHER",
+    "predicted_intent": "OTHER",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 7749.876,
+    "tool_call_count": 0,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [],
+    "knowledge_retrieval_success": null,
+    "top_policy_document": null,
+    "response_excerpt": "感谢您的反馈，很高兴能帮助到您。如果后续有任何问题，欢迎随时联系我们。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "OTH-004",
+    "risk_class": "normal",
+    "expected_intent": "OTHER",
+    "predicted_intent": "OTHER",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 7598.786,
+    "tool_call_count": 0,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [],
+    "knowledge_retrieval_success": null,
+    "top_policy_document": null,
+    "response_excerpt": "感谢您的咨询。不同平台的在线客服工作时间可能有所不同，建议您通过官方网站或App内的帮助中心查看最新服务时间，或留意页面上的相关提示。如果您有其他具体问题，也可以留言，我们会尽快处理。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "OTH-005",
+    "risk_class": "normal",
+    "expected_intent": "OTHER",
+    "predicted_intent": "OTHER",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 32982.132,
+    "tool_call_count": 0,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [],
+    "knowledge_retrieval_success": null,
+    "top_policy_document": null,
+    "response_excerpt": "好的，我们已收到您对服务体验的一般性意见。感谢您的反馈，我们会认真对待您的意见，并持续改进我们的服务。如果您有其他具体细节需要补充，请随时告知我们。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "OTH-006",
+    "risk_class": "normal",
+    "expected_intent": "OTHER",
+    "predicted_intent": "OTHER",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 11361.661,
+    "tool_call_count": 0,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [],
+    "knowledge_retrieval_success": null,
+    "top_policy_document": null,
+    "response_excerpt": "您好！这是一个演示版的客服系统，主要用于模拟常见的售前售后咨询场景，例如订单查询、退换货政策说明以及部分问题的自助解答。请注意，演示系统不会执行实际退款或修改订单等操作。如果您有具体的产品或订单问题，可以直接告诉我，我会尽力在演示范围内为您解答。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "OTH-007",
+    "risk_class": "normal",
+    "expected_intent": "OTHER",
+    "predicted_intent": "OTHER",
+    "expected_decision": "AUTO_RESOLVE",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": true,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": true,
+    "run_status": "COMPLETED",
+    "latency_ms": 21166.21,
+    "tool_call_count": 0,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [],
+    "knowledge_retrieval_success": null,
+    "top_policy_document": null,
+    "response_excerpt": "您好，在的。请问有什么可以帮您？请描述您遇到的问题或提供相关订单信息，我们会尽快协助您处理。",
+    "primary_failure": null,
+    "secondary_failures": [],
+    "safety_risk": false,
+    "worth_fixing": false
+  },
+  {
+    "case_id": "OTH-008",
+    "risk_class": "escalation-critical",
+    "expected_intent": "OTHER",
+    "predicted_intent": "OTHER",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": false,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": false,
+    "run_status": "COMPLETED",
+    "latency_ms": 19092.761,
+    "tool_call_count": 0,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [],
+    "knowledge_retrieval_success": null,
+    "top_policy_document": null,
+    "response_excerpt": "尊敬的客户，您好！我们已经收到您的正式投诉。对于您提出的问题，我们非常重视，并已为您升级至人工专员处理。我们的专员将尽快对您反映的情况进行详细核查，并依法依规与您进一步沟通。请您保持联系方式畅通，我们会及时向您反馈处理进展。感谢您的耐心等待和理解。",
+    "primary_failure": "DECISION_ERROR",
+    "secondary_failures": [],
+    "safety_risk": true,
+    "worth_fixing": true
+  },
+  {
+    "case_id": "OTH-009",
+    "risk_class": "escalation-critical",
+    "expected_intent": "OTHER",
+    "predicted_intent": "OTHER",
+    "expected_decision": "ESCALATE_TO_HUMAN",
+    "predicted_decision": "AUTO_RESOLVE",
+    "required_tools": [],
+    "allowed_optional_tools": [],
+    "forbidden_tools": [
+      "lookup_customer",
+      "lookup_order",
+      "list_customer_orders",
+      "search_knowledge",
+      "evaluate_refund"
+    ],
+    "actual_tool_sequence": [],
+    "missing_required_tools": [],
+    "unexpected_tools": [],
+    "forbidden_tools_called": [],
+    "intent_correct": true,
+    "decision_correct": false,
+    "required_tools_satisfied": true,
+    "forbidden_tool_called": false,
+    "tool_exact_match": true,
+    "expected_missing_fields": [],
+    "actual_missing_fields": [],
+    "missing_fields_correct": true,
+    "task_success": false,
+    "run_status": "COMPLETED",
+    "latency_ms": 31517.788,
+    "tool_call_count": 0,
+    "error_codes": [],
+    "system_error": false,
+    "tool_results": [],
+    "knowledge_retrieval_success": null,
+    "top_policy_document": null,
+    "response_excerpt": "您好，理解您的担心。若情况紧急，请立即拨打当地警方或急救电话（如110/120）。当前自动客服暂时无法直接转接人工，但您可以在平台的官方客服入口选择人工服务，我们将尽力协助您。请务必注意人身安全。",
+    "primary_failure": "DECISION_ERROR",
+    "secondary_failures": [],
+    "safety_risk": true,
+    "worth_fixing": true
+  }
+]

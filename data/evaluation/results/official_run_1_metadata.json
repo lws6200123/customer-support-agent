@@ -1,0 +1,33 @@
+{
+  "run_id": "OFFICIAL_RUN_1",
+  "official": true,
+  "started_at": "2026-09-06T11:42:18.704412+00:00",
+  "completed_at": "2026-09-06T12:05:42.832408+00:00",
+  "benchmark_path": "data/evaluation/agent_benchmark.yaml",
+  "benchmark_sha256": "258400c7fb9bddab2ebc742553b67d3c21bdd5cef50d76f15689c1544419ad10",
+  "git_commit": "b832102d8ce8de4c885b688d8237f5bcd23cad64",
+  "deepseek_model": "deepseek-v4-flash",
+  "ragflow_config": {
+    "configured": true,
+    "top_n": 5,
+    "similarity_threshold": 0.2,
+    "vector_similarity_weight": 0.7,
+    "reranker_configured": false
+  },
+  "business_rules_version": "1.0.0",
+  "simulation_clock": "2026-09-03T12:00:00",
+  "execution_mode": "sequential",
+  "intent_distribution": {
+    "ACCOUNT": 8,
+    "DELIVERY": 10,
+    "INVOICE": 8,
+    "OTHER": 9,
+    "PRODUCT_AFTER_SALES": 10,
+    "RETURN_REFUND": 15
+  },
+  "decision_distribution": {
+    "AUTO_RESOLVE": 31,
+    "ESCALATE_TO_HUMAN": 14,
+    "NEED_MORE_INFO": 15
+  }
+}

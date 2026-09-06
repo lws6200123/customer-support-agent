@@ -19,12 +19,19 @@ from customer_support_agent.agent.schemas import (
     Intent,
     PolicyEvidenceRecord,
     ResponseDraft,
+    SubIntent,
     TicketClassification,
     ToolExecutionRecord,
 )
 from customer_support_agent.core.config import AppSettings
 from customer_support_agent.core.errors import DomainError, ErrorCode, InvalidInputError
-from customer_support_agent.core.schemas import Decision, RefundDecisionResult, TicketStatus, TicketUpdateInput
+from customer_support_agent.core.schemas import (
+    Decision,
+    RefundDecisionResult,
+    RefundReasonCode,
+    TicketStatus,
+    TicketUpdateInput,
+)
 from customer_support_agent.db.engine import create_sqlite_engine
 from customer_support_agent.llm.adapter import SupportLanguageModel
 from customer_support_agent.services.knowledge_service import RAGFlowRetrievalClient
@@ -210,6 +217,10 @@ class SupportAgentWorkflow:
             "tool_results": [],
             "policy_evidence": [],
             "refund_result": None,
+            "customer_risk_flag": None,
+            "customer_account_status": None,
+            "customer_identity_verified": None,
+            "order_source_data_quality_flag": None,
             "decision": None,
             "missing_fields": [],
             "response_type": None,
@@ -427,11 +438,18 @@ class SupportAgentWorkflow:
                 )
             }
         classification = state["classification"]
+        reason_code = classification.reason_code
+        if (
+            reason_code is None
+            and classification.sub_intent == SubIntent.RETURN_PRODUCT
+            and classification.product_condition_ok is not None
+        ):
+            # A generic return with an explicit condition statement maps to the
+            # canonical no-special-cause rule; it is not missing a reason.
+            reason_code = RefundReasonCode.NO_REASON
         return {
             "order_id": state.get("order_id"),
-            "reason_code": (
-                classification.reason_code.value if classification.reason_code else None
-            ),
+            "reason_code": reason_code.value if reason_code else None,
             "requested_amount": classification.requested_amount,
             "issue_description": classification.issue_summary,
             "product_condition_ok": classification.product_condition_ok,
@@ -539,8 +557,13 @@ class SupportAgentWorkflow:
             errors.append(record.error_code)
             updates["error_codes"] = errors
         data = envelope.get("data")
-        if record.ok and action == AgentAction.LOOKUP_ORDER and isinstance(data, dict):
+        if record.ok and action == AgentAction.LOOKUP_CUSTOMER and isinstance(data, dict):
+            updates["customer_risk_flag"] = bool(data.get("risk_flag"))
+            updates["customer_account_status"] = data.get("account_status")
+            updates["customer_identity_verified"] = bool(data.get("identity_verified"))
+        elif record.ok and action == AgentAction.LOOKUP_ORDER and isinstance(data, dict):
             updates["customer_id"] = state.get("customer_id") or data.get("customer_id")
+            updates["order_source_data_quality_flag"] = data.get("source_data_quality_flag")
         elif record.ok and action == AgentAction.SEARCH_KNOWLEDGE and isinstance(data, dict):
             updates["policy_evidence"] = [
                 PolicyEvidenceRecord.model_validate(item) for item in data.get("results", [])
@@ -555,6 +578,7 @@ class SupportAgentWorkflow:
         missing = list(state.get("missing_fields", []))
         errors = set(state["error_codes"])
         if decision is None:
+            classification = state.get("classification")
             if ErrorCode.AGENT_STEP_LIMIT_REACHED.value in errors:
                 decision = Decision.ESCALATE_TO_HUMAN
             elif errors & {
@@ -573,6 +597,27 @@ class SupportAgentWorkflow:
                 ErrorCode.TICKET_NOT_FOUND.value,
             }:
                 decision = Decision.NEED_MORE_INFO
+            elif classification is not None and (
+                classification.human_review_requested
+                or classification.legal_or_regulatory_complaint
+                or classification.safety_sensitive
+            ):
+                decision = Decision.ESCALATE_TO_HUMAN
+            elif state.get("order_source_data_quality_flag") not in {None, "none"}:
+                decision = Decision.ESCALATE_TO_HUMAN
+            elif state.get("intent") == Intent.ACCOUNT and (
+                state.get("customer_risk_flag") is True
+                or state.get("customer_account_status") not in {None, "active"}
+            ):
+                decision = Decision.ESCALATE_TO_HUMAN
+            elif (
+                state.get("intent") == Intent.ACCOUNT
+                and state.get("sub_intent")
+                in {SubIntent.ACCOUNT_LOCKED.value, SubIntent.PASSWORD_ISSUE.value}
+                and state.get("customer_identity_verified") is False
+            ):
+                decision = Decision.NEED_MORE_INFO
+                missing.append("identity_verification")
             elif state.get("intent") == Intent.RETURN_REFUND:
                 refund_result = state.get("refund_result")
                 if refund_result is not None:

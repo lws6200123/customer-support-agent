@@ -89,6 +89,9 @@ class TicketClassification(AgentStrictModel):
     product_condition_ok: bool | None = None
     defect_confirmed: bool | None = None
     evidence_confirmed: bool | None = None
+    human_review_requested: bool = False
+    legal_or_regulatory_complaint: bool = False
+    safety_sensitive: bool = False
 
 
 class ActionPlan(AgentStrictModel):
@@ -176,6 +179,10 @@ class AgentState(TypedDict, total=False):
     tool_results: list[ToolExecutionRecord]
     policy_evidence: list[PolicyEvidenceRecord]
     refund_result: RefundDecisionResult | None
+    customer_risk_flag: bool | None
+    customer_account_status: str | None
+    customer_identity_verified: bool | None
+    order_source_data_quality_flag: str | None
     decision: Decision | None
     missing_fields: list[str]
     response_type: Decision | None
