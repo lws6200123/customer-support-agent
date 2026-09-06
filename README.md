@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Customer Support Ticket Agent is a staged portfolio project for a guarded LangGraph-based customer-support ticket system. Stage 7 adds a Vue 3 operations console on top of the Stage 6 typed FastAPI service, POST-based SSE streaming, human review operations, and dashboard metrics.
+Customer Support Ticket Agent is a staged portfolio project for a guarded LangGraph-based customer-support ticket system. Stage 8A adds a reproducible Agent benchmark and failure analysis on top of the Vue 3 operations console, typed FastAPI service, POST-based SSE streaming, human review operations, and dashboard metrics.
 
 **DemoShop is a portfolio simulation.** Transactional records and policy reference materials come from different public sources and are not claimed to belong to the same real company. Olist supplies anonymized real transaction data; JD.com Help Center pages are paraphrased public-policy references; DemoShop workflow controls are simulated internal policies.
 
@@ -165,9 +165,15 @@ npm run dev
 
 Then open [http://localhost:5173](http://localhost:5173). For a first-time local setup, `npm install` also works; `package-lock.json` is committed so subsequent installs should prefer `npm ci`.
 
+## Agent Benchmark
+
+Stage 8A uses a frozen 60-case Chinese customer-support benchmark with anonymous Demo identifiers and an isolated disposable evaluation database. Ground truth comes from the canonical intent/tool taxonomy, verified Demo SQLite facts, business rules, and deterministic refund decision service—not from the model being evaluated.
+
+The final `OFFICIAL_RUN_2` achieved 60/60 task success, 100% decision accuracy, 100% escalation recall (14/14), and 100% exact tool-set accuracy with zero system errors. These results describe one controlled portfolio benchmark against the configured DeepSeek model and RAGFlow dataset. They are not production traffic, a production SLA, or an industry benchmark. See `reports/stage8a_agent_benchmark.md`, `reports/stage8a_failure_analysis.md`, and `reports/stage8a_fix_log.md` for protocol, limitations, and the preserved Run 1 comparison.
+
 ## Development Status
 
-**Stage 7 — Vue 3 customer-support operations console implemented and visually accepted.**
+**Stage 8A — reproducible Agent benchmark and failure analysis completed.**
 
 The Agent is built on these previously completed capabilities:
 
@@ -204,7 +210,7 @@ Stage 7 adds:
 - focused Vitest coverage for API envelopes, page states, lists, actions, tags, traces, SSE parsing, and form validation;
 - reproducible Node dependencies through `package-lock.json` and a Vite production build.
 
-The limited Stage 5 integration smoke completed 10/10 fixed cases with the configured DeepSeek model, Stage 4 tools, and RAGFlow. This is an integration check rather than a final quality benchmark.
+The limited Stage 5 integration smoke completed 10/10 fixed cases with the configured DeepSeek model, Stage 4 tools, and RAGFlow. Stage 8A is the formal controlled portfolio benchmark; its scope and limitations are documented separately from that smoke check.
 
 `AUTO_RESOLVE` denotes a rule-qualified candidate only; no refund is executed. Knowledge retrieval returns evidence chunks and does not generate an answer.
 
@@ -224,4 +230,4 @@ env -u PYTHONPATH .venv/bin/python -m pytest -q
 
 The retrieval scripts require a locally configured `.env` and an available, already-populated RAGFlow dataset. The Stage 5 real smoke additionally requires `DEEPSEEK_API_KEY`, `DEEPSEEK_BASE_URL`, and `DEEPSEEK_MODEL`. No API key is stored in the repository, persisted to runtime traces, or printed in reports.
 
-Refunds are never executed: `AUTO_RESOLVE` remains a deterministic Demo decision candidate. Stage 7 is localhost/development software with no production authentication; the internal review endpoints are not safe for public deployment. There is no final evaluation benchmark, Docker Compose integration, multi-agent workflow, MCP integration, task queue, or WebSocket service. The current frontend targets desktop use; its Stage 7 manual visual acceptance is complete.
+Refunds are never executed: `AUTO_RESOLVE` remains a deterministic Demo decision candidate. The application remains localhost/development software with no production authentication; the internal review endpoints are not safe for public deployment. There is no production-scale or independent evaluation, Docker Compose integration, multi-agent workflow, MCP integration, task queue, or WebSocket service. The current frontend targets desktop use; its Stage 7 manual visual acceptance is complete.

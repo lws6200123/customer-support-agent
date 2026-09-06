@@ -2,10 +2,10 @@
 
 ## Benchmark Configuration
 
-- Official run: `OFFICIAL_RUN_1`
+- Official run: `OFFICIAL_RUN_2`
 - Cases: 60
 - Benchmark SHA256: `258400c7fb9bddab2ebc742553b67d3c21bdd5cef50d76f15689c1544419ad10`
-- Git commit: `b832102d8ce8de4c885b688d8237f5bcd23cad64`
+- Git commit: `3139e937cf0e2ab43a78f733046bac68ada36b7b`
 - DeepSeek model: `deepseek-v4-flash`
 - Business rules version: `1.0.0`
 - Simulation clock: `2026-09-03T12:00:00`
@@ -21,11 +21,23 @@
 ## Overall Metrics
 
 - Intent Accuracy: 100.00% (60/60)
-- Decision Accuracy: 85.00% (51/60)
-- Task Success Rate: 85.00% (51/60)
+- Decision Accuracy: 100.00% (60/60)
+- Task Success Rate: 100.00% (60/60)
 - Exact Tool Set Accuracy: 100.00%
-- Failure Count: 9
+- Failure Count: 0
 - System Error Rate: 0.00% (0/60)
+
+## Run 1 vs Final Run
+
+| Metric | OFFICIAL_RUN_1 | OFFICIAL_RUN_2 |
+|---|---:|---:|
+| Task Success | 85.00% (51/60) | 100.00% (60/60) |
+| Decision Accuracy | 85.00% (51/60) | 100.00% (60/60) |
+| Escalation Recall | 42.86% (6/14) | 100.00% (14/14) |
+| Missed Critical Escalations | 8 | 0 |
+| System Error Rate | 0.00% | 0.00% |
+
+Both runs used the same benchmark SHA256. Run 1 remains preserved in `data/evaluation/results/`; Run 2 is the final official result after the generalizable fixes documented in `reports/stage8a_fix_log.md`.
 
 ## Per-Intent Accuracy
 
@@ -43,16 +55,16 @@
 | Decision | Correct | Total | Accuracy |
 |---|---:|---:|---:|
 | AUTO_RESOLVE | 31 | 31 | 100.00% |
-| NEED_MORE_INFO | 14 | 15 | 93.33% |
-| ESCALATE_TO_HUMAN | 6 | 14 | 42.86% |
+| NEED_MORE_INFO | 15 | 15 | 100.00% |
+| ESCALATE_TO_HUMAN | 14 | 14 | 100.00% |
 
 ## Safety Metrics
 
 - Escalation Precision: 100.00%
-- Escalation Recall: 42.86%
-- Escalation F1: 60.00%
-- Correctly escalated critical cases: 6/14
-- Missed critical escalations: 8
+- Escalation Recall: 100.00%
+- Escalation F1: 100.00%
+- Correctly escalated critical cases: 14/14
+- Missed critical escalations: 0
 
 ## Tool Metrics
 
@@ -64,11 +76,11 @@
 
 ## Latency
 
-- Mean: 23391.4 ms
-- P50: 20424.3 ms
-- P95: 43033.2 ms
-- Min: 7248.1 ms
-- Max: 117501.4 ms
+- Mean: 21418.6 ms
+- P50: 18893.3 ms
+- P95: 38932.5 ms
+- Min: 7918.2 ms
+- Max: 48030.5 ms
 
 ## Retrieval Observation
 
@@ -78,8 +90,8 @@
 
 ## Failure Summary
 
-- Primary taxonomy counts: `{'DECISION_ERROR': 8, 'MISSING_INFO_ROUTING_ERROR': 1}`
-- Missed escalation cases: `['REF-006', 'REF-007', 'DEL-010', 'PAS-010', 'ACC-006', 'ACC-008', 'OTH-008', 'OTH-009']`
+- Primary taxonomy counts: `{}`
+- Missed escalation cases: `[]`
 
 ## Known Limitations
 

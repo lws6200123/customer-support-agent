@@ -538,7 +538,7 @@ def write_reports(
         "",
     ]
     if not failed:
-        failure_lines.append("No failed cases.")
+        failure_lines.extend(["No failed cases.", ""])
     for row in failed:
         reason = ", ".join(
             filter(

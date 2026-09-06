@@ -43,4 +43,18 @@ The benchmark file and its ground truth were not changed after the audit passed.
 - No case ID, exact benchmark message, or benchmark-specific branch was added to runtime code.
 - No policy threshold, RAG setting, business-rule file, or ground-truth field was modified.
 - `OFFICIAL_RUN_1` case outcomes remain 51/60; only its aggregate failure taxonomy was corrected from an internally inconsistent count to 8 `DECISION_ERROR` and 1 `MISSING_INFO_ROUTING_ERROR`.
-- A second full official run is required to measure the implementation changes against the unchanged benchmark.
+- The implementation changes were measured in a second full official run against the unchanged benchmark.
+
+## Final Official Run
+
+- Run: `OFFICIAL_RUN_2`
+- Code commit evaluated: `3139e937cf0e2ab43a78f733046bac68ada36b7b`
+- Benchmark SHA256: unchanged
+- Task Success: 60/60 (100.00%), up from 51/60 (85.00%)
+- Decision Accuracy: 60/60 (100.00%), up from 51/60 (85.00%)
+- Escalation Recall: 14/14 (100.00%), up from 6/14 (42.86%)
+- Missed escalation-critical cases: 0, down from 8
+- System Error Rate: 0.00% in both runs
+- Tool Selection Precision / Recall / F1: 100.00% / 100.00% / 100.00% in both runs
+
+The final run confirms the fixes against the same frozen cases without changing the benchmark or its ground truth.

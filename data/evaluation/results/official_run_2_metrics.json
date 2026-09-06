@@ -1,0 +1,93 @@
+{
+  "case_count": 60,
+  "intent_accuracy": 1.0,
+  "intent_correct": 60,
+  "per_intent": {
+    "ACCOUNT": {
+      "total": 8,
+      "correct": 8,
+      "accuracy": 1.0
+    },
+    "DELIVERY": {
+      "total": 10,
+      "correct": 10,
+      "accuracy": 1.0
+    },
+    "INVOICE": {
+      "total": 8,
+      "correct": 8,
+      "accuracy": 1.0
+    },
+    "OTHER": {
+      "total": 9,
+      "correct": 9,
+      "accuracy": 1.0
+    },
+    "PRODUCT_AFTER_SALES": {
+      "total": 10,
+      "correct": 10,
+      "accuracy": 1.0
+    },
+    "RETURN_REFUND": {
+      "total": 15,
+      "correct": 15,
+      "accuracy": 1.0
+    }
+  },
+  "decision_accuracy": 1.0,
+  "decision_correct": 60,
+  "per_decision": {
+    "AUTO_RESOLVE": {
+      "total": 31,
+      "correct": 31,
+      "accuracy": 1.0
+    },
+    "NEED_MORE_INFO": {
+      "total": 15,
+      "correct": 15,
+      "accuracy": 1.0
+    },
+    "ESCALATE_TO_HUMAN": {
+      "total": 14,
+      "correct": 14,
+      "accuracy": 1.0
+    }
+  },
+  "escalation": {
+    "true_positive": 14,
+    "false_positive": 0,
+    "false_negative": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0
+  },
+  "tools": {
+    "true_positive": 150,
+    "false_positive": 0,
+    "false_negative": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "exact_set_accuracy": 1.0
+  },
+  "task_success_rate": 1.0,
+  "task_success_count": 60,
+  "average_tool_calls": 2.5,
+  "latency_ms": {
+    "mean": 21418.56973333333,
+    "p50": 18893.3485,
+    "p95": 38932.53979999999,
+    "min": 7918.165,
+    "max": 48030.488
+  },
+  "failure_count": 0,
+  "system_error_rate": 0.0,
+  "system_error_count": 0,
+  "failure_taxonomy": {},
+  "escalation_critical": {
+    "total": 14,
+    "correctly_escalated": 14,
+    "missed_count": 0,
+    "missed_cases": []
+  }
+}
