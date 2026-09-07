@@ -101,15 +101,17 @@ def _exists(connection, model: Any, field: Any, value: str) -> bool:  # type: ig
 
 
 def validate_benchmark(
-    document: dict[str, Any], database_path: Path = EVALUATION_DB_PATH
+    document: dict[str, Any],
+    database_path: Path = EVALUATION_DB_PATH,
+    expected_case_count: int = EXPECTED_CASE_COUNT,
 ) -> list[str]:
     errors: list[str] = []
     cases = document.get("cases")
     if not isinstance(cases, list):
         return ["cases must be a list"]
-    if document.get("case_count") != EXPECTED_CASE_COUNT or len(cases) != EXPECTED_CASE_COUNT:
+    if document.get("case_count") != expected_case_count or len(cases) != expected_case_count:
         errors.append(
-            f"case count must be {EXPECTED_CASE_COUNT}; declared={document.get('case_count')}, actual={len(cases)}"
+            f"case count must be {expected_case_count}; declared={document.get('case_count')}, actual={len(cases)}"
         )
     case_ids = [case.get("case_id") for case in cases if isinstance(case, dict)]
     if len(case_ids) != len(set(case_ids)):

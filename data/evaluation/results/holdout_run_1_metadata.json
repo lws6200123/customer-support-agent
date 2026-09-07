@@ -1,0 +1,37 @@
+{
+  "run_id": "HOLDOUT_RUN_1",
+  "official": true,
+  "one_shot": true,
+  "post_result_tuning": false,
+  "started_at": "2026-09-06T13:38:26.953493+00:00",
+  "completed_at": "2026-09-06T13:47:57.730633+00:00",
+  "holdout_path": "data/evaluation/agent_holdout.yaml",
+  "holdout_sha256": "0eb3da3ef0b8012a3f69c06a938d5f87152092ae1fe481a3cc273774dd1c9252",
+  "system_freeze_commit": "15dd755502548ba6899a752b5298d6d8ba355517",
+  "deepseek_model": "deepseek-v4-flash",
+  "ragflow_config": {
+    "configured": true,
+    "top_n": 5,
+    "similarity_threshold": 0.2,
+    "vector_similarity_weight": 0.7,
+    "reranker_configured": false
+  },
+  "business_rules_version": "1.0.0",
+  "simulation_clock": "2026-09-03T12:00:00",
+  "execution_mode": "sequential",
+  "intent_distribution": {
+    "ACCOUNT": 3,
+    "DELIVERY": 4,
+    "INVOICE": 3,
+    "OTHER": 4,
+    "PRODUCT_AFTER_SALES": 4,
+    "RETURN_REFUND": 6
+  },
+  "decision_distribution": {
+    "AUTO_RESOLVE": 13,
+    "ESCALATE_TO_HUMAN": 6,
+    "NEED_MORE_INFO": 5
+  },
+  "escalation_critical": 6,
+  "information_missing": 5
+}
