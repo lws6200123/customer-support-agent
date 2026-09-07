@@ -1,161 +1,267 @@
-# Customer Support Ticket Agent
+# DemoShop Customer Support Agent
+
+A guarded customer-support Agent built with LangGraph, DeepSeek, RAGFlow, FastAPI, and Vue 3, combining real anonymized ecommerce facts, retrieval-backed policies, and deterministic business controls.
+
+DemoShop is a portfolio simulation—not an Olist or JD.com internal system. The application demonstrates how an LLM can understand and explain a support request while deterministic code retains control of tools, refund candidacy, escalation, and persistence.
 
 ## Project Overview
 
-Customer Support Ticket Agent is a staged portfolio project for a guarded LangGraph-based customer-support ticket system. Stage 8A adds a reproducible Agent benchmark and failure analysis on top of the Vue 3 operations console, typed FastAPI service, POST-based SSE streaming, human review operations, and dashboard metrics.
+This repository implements a complete local customer-support workflow: a Vue operations console submits tickets to FastAPI, receives live POST-SSE execution events, and displays the resulting decision and sanitized trace. A single LangGraph Agent uses DeepSeek for structured language tasks, retrieves policy evidence from an external RAGFlow service, reads business facts from SQLite, and routes sensitive cases to a human-review queue.
 
-**DemoShop is a portfolio simulation.** Transactional records and policy reference materials come from different public sources and are not claimed to belong to the same real company. Olist supplies anonymized real transaction data; JD.com Help Center pages are paraphrased public-policy references; DemoShop workflow controls are simulated internal policies.
+The system never executes a financial refund. `AUTO_RESOLVE` means only that the request is a rule-qualified demo candidate that can be handled without human escalation.
 
-## Current and Planned Architecture
+## Demo Screenshots
 
-The Python application uses a `src` layout. Package boundaries separate Agent orchestration, thin tools, business services, persistence, future API delivery, and shared configuration/contracts.
+All screenshots below were captured from the real local Vue operations console using anonymous Demo identifiers. They are not generated mockups.
 
-```text
-SQLite
-  ↓
-Business Services
-  ↓
-LangChain Structured Tools
+### Operations Dashboard
 
-Knowledge Markdown
-  ↓
-RAGFlow Retrieval API
-  ↓
-KnowledgeTool
-```
+[![DemoShop operations dashboard](docs/assets/screenshots/01_dashboard.png)](docs/assets/screenshots/01_dashboard.png)
 
-The current tools retrieve customer/order context, list customer orders, evaluate refund candidates, manage synthetic tickets, and retrieve policy evidence. The Stage 5 graph uses structured LLM output for language understanding, bounded planning, and response wording, while deterministic nodes retain control of allowed actions, refund decisions, routing, ticket lifecycle, and persistence.
+### Live Agent execution
+
+[![Live POST-SSE Agent execution timeline](docs/assets/screenshots/02_agent_demo.png)](docs/assets/screenshots/02_agent_demo.png)
+
+The capture shows an in-progress POST-SSE run so the started/completed tool events remain visible as they arrive.
+
+### Ticket investigation and trace
+
+[![Ticket detail and sanitized Agent trace](docs/assets/screenshots/03_ticket_trace.png)](docs/assets/screenshots/03_ticket_trace.png)
+
+### Human review and Ticket inbox
+
+| Human-review empty state | Filterable Ticket inbox |
+|---|---|
+| [![Human-review queue empty state](docs/assets/screenshots/04_human_review.png)](docs/assets/screenshots/04_human_review.png) | [![Filterable Ticket inbox](docs/assets/screenshots/05_ticket_inbox.png)](docs/assets/screenshots/05_ticket_inbox.png) |
+
+## Key Features
+
+- Stateful single-Agent customer-support workflow built with LangGraph.
+- DeepSeek structured classification, allowlisted planning, and safe response drafting.
+- Guarded structured-tool orchestration with deterministic plan validation and an eight-call bound.
+- Deterministic `RefundDecisionService` for policy eligibility and simulated operational controls.
+- Retrieval-only RAGFlow integration over a ten-document policy corpus.
+- SQLite fact layer preserving customers, orders, items, payments, reviews, tickets, and traces.
+- Human-in-the-loop escalation queue with controlled demo review actions.
+- Typed FastAPI endpoints, consistent error envelopes, request IDs, and POST-SSE streaming.
+- Persisted, ordered, sanitized Agent execution traces.
+- Vue 3 operations console for dashboard, tickets, trace review, human review, and live Agent demos.
+- Reproducible 60-case regression benchmark plus an untouched 24-case post-fix holdout.
+
+## System Architecture
 
 ```mermaid
-flowchart TD
-    A[initialize_run] --> B[classify_ticket - LLM]
-    B --> C[plan_actions - LLM]
-    C --> D[validate_plan - deterministic]
-    D -->|pending action| E[execute_action - Stage 4 Tool]
-    E -->|more actions and below limit| E
-    E -->|complete or bounded| F[evaluate_resolution - deterministic]
-    D -->|no action| F
-    F --> G[draft_response - LLM with safe fallback]
-    G --> H[persist_result]
+flowchart TB
+    User[Support operator] --> Vue[Vue 3 Operations Console]
+    Vue -->|JSON and POST SSE| API[FastAPI API Layer]
+    API --> Graph[Single LangGraph Agent]
+
+    Graph --> DeepSeek[DeepSeek structured output]
+    Graph --> CustomerOrder[CustomerTool and OrderTool]
+    CustomerOrder --> SQLite[(SQLite business facts)]
+    Graph --> Knowledge[KnowledgeTool]
+    Knowledge --> RAGFlow[External RAGFlow service]
+    Graph --> Refund[RefundTool]
+    Refund --> Rules[Deterministic refund rules]
+    Graph --> Ticket[TicketTool]
+    Ticket --> SQLite
+
+    Graph --> Review[Human Review Queue]
+    Review --> Vue
+    Graph --> Trace[(Sanitized Agent trace)]
+    Trace --> Vue
 ```
 
-## Data Strategy
+RAGFlow is an external dependency and is not repackaged by this repository. DeepSeek and RAGFlow credentials remain server-side; the browser calls only FastAPI.
 
-- Olist will be used as an anonymized real-world e-commerce transaction data source.
-- Internal customer-support tickets, risk flags, refund approvals, and similar operational data will be explicitly labeled as **synthetic**.
-- Knowledge policies will distinguish **public-policy-derived** material from **simulated internal policy** material.
-- Raw source data and processed outputs will remain outside Git, while placeholder files preserve the intended directory layout.
-- A fixed simulation clock (`2026-09-03T12:00:00`) and fixed seed make the Demo build reproducible.
-- Scenario-aware selection retains 2,000 unique orders covering delivery, fulfillment-state, review, multi-item, and multi-payment cases.
-- One offset per order normalizes every associated timestamp while preserving original intervals, late-delivery relationships, and flagged source chronology anomalies.
-- Membership, risk, account status, identity verification, language, tickets, and refunds are synthetic operational data—not Olist facts.
-- Public-policy-derived documents are paraphrased/adapted references and do not represent a real JD.com or Olist internal customer-service system.
-- Simulated internal workflow thresholds have one machine-readable source of truth: `knowledge/business_rules.yaml`.
-- Olist monetary values and the simulated automatic-refund threshold share the canonical `BRL` semantic; no currency conversion is applied.
-- Refund frequency means prior `approved` refunds for the same customer in `[simulation_now - 30 days, simulation_now)`; the current request is excluded and a count of 2 or more requires escalation.
+## Agent Workflow
 
-## Planned Tech Stack
+```mermaid
+flowchart LR
+    A[initialize] --> B[classify with LLM]
+    B --> C[plan with LLM]
+    C --> D[validate deterministic allowlist]
+    D --> E[execute structured tools]
+    E -->|more work and below MAX_AGENT_STEPS 8| E
+    E --> F[evaluate deterministic resolution]
+    D -->|no accepted action| F
+    F --> G[draft safe response with LLM]
+    G --> H[persist ticket and trace]
 
-- Python 3.10+
-- FastAPI and Uvicorn
-- LangChain and LangGraph
-- SQLAlchemy and SQLite
-- Pydantic
-- httpx
-- pytest
+    F --> AR[AUTO_RESOLVE candidate]
+    F --> MI[NEED_MORE_INFO]
+    F --> HR[ESCALATE_TO_HUMAN]
+
+    Rules[RefundDecisionService result] --> F
+    Guard[LLM cannot override refund decision] -. guardrail .-> F
+```
+
+The LLM proposes structured outputs; it does not receive authority to execute SQL, mutate balances, invent tools, or override the deterministic refund result.
+
+## Why a Guarded Agent Instead of Pure ReAct
+
+A free-form ReAct loop is flexible, but customer-support decisions often depend on exact data, policy boundaries, and auditable safety controls. This design separates responsibilities:
+
+| LLM responsibility | Deterministic responsibility |
+|---|---|
+| Classify natural-language intent | Validate canonical taxonomy and identifiers |
+| Propose allowlisted actions | Add required tools and reject unrelated tools |
+| Summarize the issue | Retrieve exact SQLite business facts |
+| Draft customer-safe wording | Calculate refund eligibility and escalation |
+| Explain the final route | Bound steps, persist lifecycle, and sanitize traces |
+
+This makes model behavior observable without treating model prose as a business transaction.
+
+## Evaluation Results
+
+All figures below come from controlled portfolio benchmarks. They are not production traffic, an industry benchmark, or a production SLA.
+
+### Development / Regression Benchmark
+
+The main benchmark contains 60 Chinese cases across six intents. Its decision distribution is 31 `AUTO_RESOLVE`, 15 `NEED_MORE_INFO`, and 14 `ESCALATE_TO_HUMAN`.
+
+| Result | Task Success | Decision Accuracy | Escalation Recall |
+|---|---:|---:|---:|
+| `OFFICIAL_RUN_1` | 51/60 (85.00%) | 85.00% | 42.86% |
+| `OFFICIAL_RUN_2` regression | 60/60 (100.00%) | 100.00% | 100.00% |
+
+Run 1 was used for failure analysis and led to generalizable implementation fixes. The final 60/60 run is therefore a regression result, not an untouched generalization score. Both runs and the unchanged benchmark SHA256 are preserved.
+
+### Post-fix Untouched Holdout
+
+The holdout contains 24 completely new Chinese cases created after the fixes. It was frozen, run exactly once, and followed by no system or ground-truth tuning.
+
+| Metric | `HOLDOUT_RUN_1` |
+|---|---:|
+| Intent Accuracy | 100.00% |
+| Decision Accuracy | 95.83% |
+| Task Success | 23/24 (95.83%) |
+| Tool Selection F1 | 100.00% |
+| Exact Tool Set Accuracy | 100.00% |
+| Escalation Precision / Recall / F1 | 100.00% / 83.33% / 90.91% |
+| System Error Rate | 0.00% |
+| Latency P50 / P95 | 19.74 s / 40.09 s |
+
+The missed escalation, `HOLD-REF-003`, returned `NEED_MORE_INFO` rather than unsafe automatic resolution. A missing refund-reason extraction caused the deterministic service to request more information before reaching the high-amount escalation control. This failure remains visible and was not tuned or rerun.
+
+## Safety and Human-in-the-loop
+
+- Refund decisions are computed by deterministic rules loaded from one canonical YAML source.
+- Risk, inactive-account, identity, amount, frequency, and source-quality controls can require human review.
+- Missing identifiers and required evidence route to `NEED_MORE_INFO`.
+- Legal, explicit-human-review, and personal-safety signals route to a neutral human-review outcome.
+- Customer-facing text cannot expose internal risk flags or claim an unexecuted refund succeeded.
+- Tool names and arguments use typed Pydantic contracts; non-allowlisted actions are discarded.
+- Agent runs and node steps are stored with safe summaries rather than full prompts or credentials.
+- Human-review actions change only the synthetic demo ticket lifecycle and never call a payment provider.
+
+## Data and Policy Provenance
+
+| Layer | Source | Used for |
+|---|---|---|
+| **Real / anonymized transactional data** | Olist Brazilian E-Commerce Public Dataset | Customer/order relationships, items, products, sellers, payments, reviews, and source timestamps |
+| **Public-policy-derived** | Public ecommerce help-center pages, reorganized and paraphrased | Return, after-sales, delivery, invoice, refund, and account guidance |
+| **Simulated internal** | Deterministic DemoShop generation and canonical rules | Membership, risk, identity verification, tickets, refund approvals, SLA, and escalation controls |
+
+Demo identifiers and time normalization are deterministic derivatives. DemoShop does not claim that Olist transactions were governed by JD.com policies, and it is not a real internal system of either organization.
+
+Raw Olist CSV files are never committed or redistributed. Download the dataset from the official [Olist Brazilian E-Commerce Public Dataset page](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce), review its current terms, and place the files locally before building the demo data.
+
+## Tech Stack
+
+- Python 3.10+, FastAPI, Uvicorn, Pydantic, SQLAlchemy, and SQLite
+- LangGraph, LangChain structured tools, and LangChain OpenAI-compatible adapter
+- DeepSeek structured generation and external RAGFlow retrieval
 - Vue 3, TypeScript, Vite, Vue Router, and Ant Design Vue
+- pytest, Vitest, Vue Test Utils, Docker, Nginx, and Docker Compose
 
-## FastAPI Architecture
+## Quick Start
 
-The HTTP layer follows one direction: thin router → application service → existing workflow/services → tools and persistence. Routers contain no SQL, refund rules, or copied LangGraph decisions. `create_app()` constructs dependencies without running an Agent, rebuilding data, calling DeepSeek, or calling RAGFlow. Startup only ensures the additive `human_reviews` history table exists.
+The following flow is intentionally explicit. A fresh clone still requires the official Olist files, an available RAGFlow instance, and user-owned API credentials.
 
-Synchronous LangGraph, SQLite, LLM, and RAGFlow work runs in a bounded application thread pool. Async routes cooperatively await those futures so long work does not block the event loop. Both `/run` and `/run/stream` execute the same compiled graph; the stream adapter converts graph node updates into safe events.
-
-Every JSON response uses a stable envelope:
-
-```json
-{"ok": true, "data": {}, "request_id": "client-or-server-request-id"}
-```
-
-Errors use a non-200 HTTP status and `{ "ok": false, "error": { "code": "...", "message": "..." }, "request_id": "..." }`. Clients may supply `X-Request-ID`; every response echoes it in the header and body. Logs contain request ID, method, path, status, and latency, but not request bodies, authorization headers, secrets, or complete prompts.
-
-## API Endpoints
-
-- `GET /health` — lightweight liveness and version.
-- `GET /ready` — SQLite availability plus configuration presence; it never invokes generation or retrieval.
-- `GET /api/v1/tickets` — paginated tickets, optionally filtered by `status`, `decision`, or `intent`.
-- `POST /api/v1/tickets` — create a linked synthetic demo ticket without running the Agent.
-- `GET /api/v1/tickets/{ticket_id}` — ticket, safe customer/order summary, and latest run summary.
-- `POST /api/v1/agent/run` — synchronous-response Agent execution.
-- `POST /api/v1/agent/run/stream` — SSE Agent execution.
-- `GET /api/v1/agent-runs/{run_id}` — safe run summary.
-- `GET /api/v1/agent-runs/{run_id}/steps` — ordered sanitized timeline.
-- `GET /api/v1/human-reviews` — paginated canonical escalation queue.
-- `POST /api/v1/human-reviews/{ticket_id}` — controlled `RESOLVE`, `REQUEST_MORE_INFO`, or `KEEP_ESCALATED` review action.
-- `GET /api/v1/dashboard/summary` — live SQLite ticket/run counts, average latency, and recent runs.
-
-List endpoints default to 20 records and cap `page_size` at 100. The API input for an Agent run is `message` plus optional `customer_id`, `order_id`, and `ticket_id`. An existing `ticket_id` is processed directly. Without a ticket, valid customer and order IDs cause a linked demo ticket to be created; incomplete context remains an unlinked run with `ticket_id: null`, allowing a truthful `NEED_MORE_INFO` result. `POST /tickets` requires both valid links because the existing operational Ticket schema intentionally enforces those foreign keys.
-
-Example:
+### 1. Clone and create the Python environment
 
 ```bash
-curl -sS http://127.0.0.1:8000/health -H 'X-Request-ID: local-example'
-
-curl -sS http://127.0.0.1:8000/api/v1/agent/run \
-  -H 'Content-Type: application/json' \
-  -d '{"message":"My package is late, but I cannot find the order ID."}'
+git clone git@github.com:lws6200123/customer-support-agent.git
+cd customer-support-agent
+python3 -m venv .venv
+env -u PYTHONPATH .venv/bin/python -m pip install --upgrade pip
+env -u PYTHONPATH .venv/bin/python -m pip install -e ".[data,knowledge,dev]"
 ```
 
-## SSE Usage
+Python 3.10 or newer is required. The current frontend toolchain requires a Node version accepted by both installed engines; Node 22.12+ or Node 24 is the practical choice.
 
-The stream sequence is `run_started`, `classification`, zero or more `tool_started` / `tool_completed` pairs, `decision`, `final_response`, and `run_completed`. Safe failures emit `error` and terminate. Each event carries JSON with a timestamp and run ID once available; full prompts, policy bodies, credentials, and raw trace payloads are excluded.
+### 2. Obtain the Olist data
 
-Because browsers' native `EventSource` cannot POST, Stage 7 must consume this endpoint with `fetch()` and `ReadableStream`:
-
-```bash
-curl -N http://127.0.0.1:8000/api/v1/agent/run/stream \
-  -H 'Content-Type: application/json' \
-  -d '{"message":"My package is late, but I cannot find the order ID."}'
-```
-
-## Human Review and Dashboard
-
-The review queue is derived from canonical `ESCALATE_TO_HUMAN` runs and `under_review` tickets, never from response text. Reviewer actions update only the synthetic demo lifecycle and append metadata to `human_reviews`. They do not call a payment provider or represent money as refunded. Dashboard values are queried from the current runtime SQLite database; Stage 5 smoke numbers are never hard-coded.
-
-## Frontend Operations Console
-
-The Stage 7 browser application is a desktop-focused operations console. Its pages are:
-
-- `/` — live dashboard totals, decision/status distributions, and recent Agent runs;
-- `/tickets` — paginated Ticket inbox with status, decision, and intent filters;
-- `/tickets/:ticketId` — Ticket context, latest safe Agent outcome, and sanitized trace;
-- `/human-reviews` — canonical escalation queue with controlled review actions;
-- `/demo` — real POST-SSE Agent execution with a live timeline and verified anonymous demo identifiers.
-
-Frontend code is separated into typed API modules, reusable presentation components, route-level pages, and an SSE composable. The browser calls only FastAPI; DeepSeek and RAGFlow credentials remain server-side.
+Download `olistbr/brazilian-ecommerce` manually from Kaggle and place these immutable files in `data/raw/olist/`:
 
 ```text
-Vue operations console
-  ↓ HTTP JSON / POST SSE
-FastAPI
-  ↓
-LangGraph
-  ↓
-Business Tools → SQLite / RAGFlow
+olist_customers_dataset.csv
+olist_geolocation_dataset.csv
+olist_order_items_dataset.csv
+olist_order_payments_dataset.csv
+olist_order_reviews_dataset.csv
+olist_orders_dataset.csv
+olist_products_dataset.csv
+olist_sellers_dataset.csv
+product_category_name_translation.csv
 ```
 
-The interface deliberately labels `AUTO_RESOLVE` as a candidate rather than a completed refund. Human review is a simulated workflow and no financial action is executed.
+Do not add the CSV files or Kaggle credentials to Git.
 
-## Development Run
+### 3. Build deterministic demo data and initialize SQLite
 
 ```bash
-env -u PYTHONPATH .venv/bin/python -m uvicorn customer_support_agent.api.main:app \
-  --app-dir src --host 127.0.0.1 --port 8000
+env -u PYTHONPATH .venv/bin/python scripts/build_demo_dataset.py
+env -u PYTHONPATH .venv/bin/python scripts/init_db.py
 ```
 
-In development, interactive docs are available at `/docs` and the typed specification at `/openapi.json`. CORS uses the `CORS_ALLOWED_ORIGINS` comma-separated allowlist (default `http://localhost:5173`), never `*`; credentials are disabled.
+The build selects 2,000 scenario-aware orders with a fixed seed and clock, writes ignored processed CSVs, and creates the ignored runtime database at `data/seed/customer_support_demo.db`.
 
-Run the frontend in a second terminal:
+### 4. Prepare RAGFlow
+
+Run RAGFlow separately using its official deployment instructions. In the RAGFlow UI:
+
+1. Create one dataset for DemoShop customer-support policies.
+2. Upload all ten Markdown files from `knowledge/policies/`.
+3. Parse every document and confirm all ten are available for retrieval.
+4. Create or select an API key and copy the dataset ID for local configuration.
+
+The tested integration used RAGFlow v0.27.1 and the retrieval endpoint `POST /api/v1/retrieval`. Other versions may require compatibility verification.
+
+### 5. Configure backend and frontend environments
+
+```bash
+cp .env.example .env
+cp frontend/.env.example frontend/.env
+```
+
+Fill the backend `.env` with user-owned values:
+
+- `DEEPSEEK_API_KEY`, `DEEPSEEK_BASE_URL`, `DEEPSEEK_MODEL`
+- `RAGFLOW_BASE_URL`, `RAGFLOW_API_KEY`, `RAGFLOW_DATASET_ID`
+
+The frontend exposes only `VITE_API_BASE_URL`; never place DeepSeek or RAGFlow credentials in a `VITE_*` variable.
+
+### 6. Validate setup
+
+```bash
+env -u PYTHONPATH .venv/bin/python scripts/check_demo_setup.py
+# or
+make check
+```
+
+The check is read-only and prints only `PASS` or `MISSING` with non-secret details.
+
+### 7. Start the application
+
+Terminal 1:
+
+```bash
+make backend
+```
+
+Terminal 2:
 
 ```bash
 cd frontend
@@ -163,71 +269,110 @@ npm ci
 npm run dev
 ```
 
-Then open [http://localhost:5173](http://localhost:5173). For a first-time local setup, `npm install` also works; `package-lock.json` is committed so subsequent installs should prefer `npm ci`.
+Open [http://localhost:5173](http://localhost:5173). FastAPI runs at [http://127.0.0.1:8000](http://127.0.0.1:8000), with interactive docs at `/docs` in development.
 
-## Agent Benchmark
+## Optional Docker Demo
 
-Stage 8A uses a frozen 60-case Chinese customer-support benchmark with anonymous Demo identifiers and an isolated disposable evaluation database. Ground truth comes from the canonical intent/tool taxonomy, verified Demo SQLite facts, business rules, and deterministic refund decision service—not from the model being evaluated.
+Docker packages only the FastAPI application and Vue/Nginx frontend. RAGFlow remains an externally managed service, and the demo SQLite database is mounted from the host.
 
-The final `OFFICIAL_RUN_2` achieved 60/60 task success, 100% decision accuracy, 100% escalation recall (14/14), and 100% exact tool-set accuracy with zero system errors. These results describe one controlled portfolio benchmark against the configured DeepSeek model and RAGFlow dataset. They are not production traffic, a production SLA, or an industry benchmark. See `reports/stage8a_agent_benchmark.md`, `reports/stage8a_failure_analysis.md`, and `reports/stage8a_fix_log.md` for protocol, limitations, and the preserved Run 1 comparison.
-
-## Development Status
-
-**Stage 8A — reproducible Agent benchmark and failure analysis completed.**
-
-The Agent is built on these previously completed capabilities:
-
-- typed `CustomerService`, `OrderService`, `TicketService`, and `RefundDecisionService`;
-- a deterministic refund engine that separates policy eligibility from operational decision;
-- six LangChain structured tools with one JSON-safe success/error envelope;
-- RAGFlow v0.27.1 retrieval-only integration with local policy metadata normalization;
-- real retrieval and disposable-database tool smoke suites.
-
-Stage 5 adds:
-
-- Pydantic-structured ticket classification, allowlisted action planning, and response drafting;
-- a typed Agent state and compiled LangGraph with an eight-tool-call default bound;
-- deterministic plan and resolution guardrails that an LLM cannot override;
-- canonical ticket lifecycle transitions and sanitized `agent_runs` / `agent_steps` traces;
-- a scripted LLM test adapter so normal tests have no API cost or network dependency;
-- a limited real DeepSeek + RAGFlow integration script that refuses to run without complete local configuration.
-
-Stage 6 adds:
-
-- typed success/error envelopes and normalized domain/validation/service failures;
-- request correlation, safe request logging, explicit CORS, liveness, and readiness;
-- paginated Ticket and review APIs plus safe Agent run/timeline queries;
-- one shared LangGraph execution path for non-streaming and SSE delivery;
-- append-only human review history and runtime-derived dashboard metrics;
-- fake-model API/SSE tests plus a bounded real localhost HTTP integration smoke.
-
-Stage 7 adds:
-
-- a professional Ant Design Vue layout for Dashboard, Tickets, Human Review, and Agent Demo;
-- one typed FastAPI client with consistent envelope, request-ID, timeout, and network-error handling;
-- a POST-SSE `fetch()` / `ReadableStream` client that tolerates unknown future event types;
-- sanitized ordered Agent timelines and safe routing/outcome language;
-- focused Vitest coverage for API envelopes, page states, lists, actions, tags, traces, SSE parsing, and form validation;
-- reproducible Node dependencies through `package-lock.json` and a Vite production build.
-
-The limited Stage 5 integration smoke completed 10/10 fixed cases with the configured DeepSeek model, Stage 4 tools, and RAGFlow. Stage 8A is the formal controlled portfolio benchmark; its scope and limitations are documented separately from that smoke check.
-
-`AUTO_RESOLVE` denotes a rule-qualified candidate only; no refund is executed. Knowledge retrieval returns evidence chunks and does not generate an answer.
-
-Rebuild and verify Stage 2 from the project root:
+Complete Quick Start steps 1–5 first, including building `data/seed/customer_support_demo.db`. If RAGFlow runs on the Docker host, keep the safe default `CSA_DOCKER_RAGFLOW_BASE_URL=http://host.docker.internal:9380`; otherwise set it to a container-reachable RAGFlow URL.
 
 ```bash
-env -u PYTHONPATH .venv/bin/python scripts/build_demo_dataset.py
-env -u PYTHONPATH .venv/bin/python scripts/init_db.py
-env -u PYTHONPATH .venv/bin/python scripts/run_smoke_queries.py
-env -u PYTHONPATH .venv/bin/python scripts/audit_policies.py
-env -u PYTHONPATH .venv/bin/python scripts/run_stage4_knowledge_smoke.py
-env -u PYTHONPATH .venv/bin/python scripts/run_stage4_tool_smoke.py
-env -u PYTHONPATH .venv/bin/python scripts/run_stage5_agent_smoke.py
-env -u PYTHONPATH .venv/bin/python scripts/run_stage6_api_smoke.py
-env -u PYTHONPATH .venv/bin/python -m pytest -q
+docker compose -f docker-compose.demo.yml up --build
 ```
 
-The retrieval scripts require a locally configured `.env` and an available, already-populated RAGFlow dataset. The Stage 5 real smoke additionally requires `DEEPSEEK_API_KEY`, `DEEPSEEK_BASE_URL`, and `DEEPSEEK_MODEL`. No API key is stored in the repository, persisted to runtime traces, or printed in reports.
+Then open [http://localhost:8080](http://localhost:8080). Nginx provides Vue history fallback and proxies `/api/` to FastAPI. The POST-SSE route has proxy buffering and caching disabled.
 
-Refunds are never executed: `AUTO_RESOLVE` remains a deterministic Demo decision candidate. The application remains localhost/development software with no production authentication; the internal review endpoints are not safe for public deployment. There is no production-scale or independent evaluation, Docker Compose integration, multi-agent workflow, MCP integration, task queue, or WebSocket service. The current frontend targets desktop use; its Stage 7 manual visual acceptance is complete.
+The host ports default to `8000` for the API and `8080` for the console. If either is occupied, set `CSA_API_PORT` and `CSA_FRONTEND_PORT` in `.env`; also make `CSA_DOCKER_FRONTEND_API_BASE_URL` match the public frontend origin used by the browser build.
+
+This is not a one-command-from-zero environment: Olist acquisition, deterministic DB creation, RAGFlow setup, and private credentials remain explicit prerequisites.
+
+## API and UI
+
+Key API endpoints:
+
+- `GET /health` and `GET /ready`
+- `GET/POST /api/v1/tickets`
+- `GET /api/v1/tickets/{ticket_id}`
+- `POST /api/v1/agent/run`
+- `POST /api/v1/agent/run/stream`
+- `GET /api/v1/agent-runs/{run_id}` and `/steps`
+- `GET/POST /api/v1/human-reviews`
+- `GET /api/v1/dashboard/summary`
+
+Console routes:
+
+- `/` — live dashboard
+- `/tickets` and `/tickets/:ticketId` — inbox and ticket detail
+- `/human-reviews` — controlled review queue
+- `/demo` — live Agent execution timeline
+
+API responses use typed success/error envelopes and request IDs. POST-SSE emits safe lifecycle events without prompts, policy bodies, or credentials.
+
+## Testing
+
+The committed regression suites contain 77 backend tests and 17 frontend tests. Test counts describe software coverage, not model accuracy.
+
+```bash
+env -u PYTHONPATH .venv/bin/python -m pytest -q
+cd frontend && npm test
+cd frontend && npm run build
+```
+
+`make test` runs both test suites. Real DeepSeek/RAGFlow smoke and benchmark scripts are intentionally separate because they require external services and may incur API cost.
+
+## Project Structure
+
+```text
+customer-support-agent/
+├── src/customer_support_agent/   # Agent, API, tools, services, DB, LLM, core
+├── frontend/                     # Vue 3 operations console
+├── knowledge/                    # Canonical rules, provenance, 10 policies
+├── data/
+│   ├── raw/olist/                # ignored official source CSVs
+│   ├── processed/                # ignored deterministic derived tables
+│   ├── seed/                     # ignored demo runtime SQLite
+│   └── evaluation/               # frozen cases and compact result artifacts
+├── scripts/                      # build, audit, smoke, setup, evaluation
+├── tests/                        # offline backend regression suite
+├── reports/                      # concise evidence and analysis
+├── docs/assets/screenshots/      # reviewed real UI captures only
+├── docker/                       # API and frontend container definitions
+├── docker-compose.demo.yml
+├── Makefile
+└── pyproject.toml
+```
+
+## Known Limitations
+
+- The benchmark and holdout are small, controlled portfolio datasets—not independent or production evaluations.
+- The 24-case holdout has one missed escalation that safely requested more information rather than auto-resolving.
+- External-model latency was substantial: holdout P50 19.74 seconds and P95 40.09 seconds.
+- RAGFlow must be deployed and populated separately; its lifecycle is outside this repository.
+- The application has no production authentication, authorization, rate limiting, job queue, or high-availability design.
+- SQLite and the desktop-focused UI are appropriate for a local demo, not concurrent enterprise traffic.
+- Policy-derived content is illustrative and is not legal, tax, or operational advice.
+- No payment provider is integrated, and no actual refund is executed.
+
+## Detailed Reports
+
+- [Stage 1 — Olist data audit](reports/stage1_olist_data_audit.md)
+- [Stage 2 — Demo dataset](reports/stage2_demo_dataset.md)
+- [Stage 2 — SQLite smoke](reports/stage2_sqlite_smoke.md)
+- [Stage 3 — Policy audit](reports/stage3_policy_audit.md)
+- [Stage 4 — Preflight audit](reports/stage4_preflight_audit.md)
+- [Stage 4 — Knowledge retrieval smoke](reports/stage4_knowledge_smoke.md)
+- [Stage 4 — Business tool smoke](reports/stage4_tool_smoke.md)
+- [Stage 5 — Workflow design](reports/stage5_workflow_design.md)
+- [Stage 5 — Agent smoke](reports/stage5_agent_smoke.md)
+- [Stage 6 — API smoke](reports/stage6_api_smoke.md)
+- [Stage 8A — Evaluation protocol](reports/stage8a_evaluation_protocol.md)
+- [Stage 8A — Main benchmark](reports/stage8a_agent_benchmark.md)
+- [Stage 8A — Failure analysis](reports/stage8a_failure_analysis.md)
+- [Stage 8A — Fix log](reports/stage8a_fix_log.md)
+- [Stage 8A — Holdout audit](reports/stage8a_holdout_audit.md)
+- [Stage 8A — Post-fix holdout](reports/stage8a_holdout_report.md)
+
+## Development History
+
+Stages 0–7 established the project skeleton, Olist audit, deterministic demo database, policy corpus, business tools, guarded LangGraph workflow, FastAPI/SSE service, and Vue operations console. Stage 8A froze the regression benchmark and one-shot holdout. Stage 8B packages the existing implementation for reproducible portfolio review without changing Agent behavior.
